@@ -1,7 +1,7 @@
 # Anvil Python API library
 
 <!-- prettier-ignore -->
-[![PyPI version](https://img.shields.io/pypi/v/anvil.svg?label=pypi%20(stable))](https://pypi.org/project/anvil/)
+[![PyPI version](https://img.shields.io/pypi/v/joinanvil.svg?label=pypi%20(stable))](https://pypi.org/project/joinanvil/)
 
 The Anvil Python library provides convenient access to the Anvil REST API from any Python 3.8+
 application. The library includes type definitions for all request params and response fields,
@@ -17,7 +17,7 @@ The full API of this library can be found in [api.md](api.md).
 
 ```sh
 # install from PyPI
-pip install --pre anvil
+pip install --pre joinanvil
 ```
 
 ## Usage
@@ -81,7 +81,7 @@ You can enable this by installing `aiohttp`:
 
 ```sh
 # install from PyPI
-pip install --pre anvil[aiohttp]
+pip install --pre joinanvil[aiohttp]
 ```
 
 Then you can enable it by instantiating the client with `http_client=DefaultAioHttpClient()`:

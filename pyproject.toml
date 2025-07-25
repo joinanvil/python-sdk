@@ -1,5 +1,5 @@
 [project]
-name = "anvil"
+name = "joinanvil"
 version = "0.0.1-alpha.1"
 description = "The official Python library for the anvil API"
 dynamic = ["readme"]

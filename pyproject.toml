@@ -35,8 +35,8 @@ classifiers = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/Blueplanai/anvil"
-Repository = "https://github.com/Blueplanai/anvil"
+Homepage = "https://github.com/Anvil/anvil"
+Repository = "https://github.com/Anvil/anvil"
 
 [project.optional-dependencies]
 aiohttp = ["aiohttp", "httpx_aiohttp>=0.1.8"]
@@ -125,7 +125,7 @@ path = "README.md"
 [[tool.hatch.metadata.hooks.fancy-pypi-readme.substitutions]]
 # replace relative links with absolute links
 pattern = '\[(.+?)\]\(((?!https?://)\S+?)\)'
-replacement = '[\1](https://github.com/Blueplanai/anvil/tree/main/\g<2>)'
+replacement = '[\1](https://github.com/Anvil/anvil/tree/main/\g<2>)'
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

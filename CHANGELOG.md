@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.0.1-alpha.2 (2025-07-25)
+
+Full Changelog: [v0.0.1-alpha.1...v0.0.1-alpha.2](https://github.com/Blueplanai/python-sdk/compare/v0.0.1-alpha.1...v0.0.1-alpha.2)
+
+### Chores
+
+* **project:** add settings file for vscode ([7c4eb07](https://github.com/Blueplanai/python-sdk/commit/7c4eb07b387d3ecadc7c317d402ffd1502fc09f0))
+
 ## 0.0.1-alpha.1 (2025-07-23)
 
 Full Changelog: [v0.0.1-alpha.0...v0.0.1-alpha.1](https://github.com/Blueplanai/python-sdk/compare/v0.0.1-alpha.0...v0.0.1-alpha.1)

@@ -11,17 +11,14 @@ from ..._utils import maybe_transform, async_maybe_transform
 from ..._compat import cached_property
 from ..._resource import SyncAPIResource, AsyncAPIResource
 from ..._response import (
-    BinaryAPIResponse,
-    AsyncBinaryAPIResponse,
-    StreamedBinaryAPIResponse,
-    AsyncStreamedBinaryAPIResponse,
-    to_custom_raw_response_wrapper,
-    to_custom_streamed_response_wrapper,
-    async_to_custom_raw_response_wrapper,
-    async_to_custom_streamed_response_wrapper,
+    to_raw_response_wrapper,
+    to_streamed_response_wrapper,
+    async_to_raw_response_wrapper,
+    async_to_streamed_response_wrapper,
 )
 from ...types.beta import topic_create_prompts_params
 from ..._base_client import make_request_options
+from ...types.beta.topic_create_prompts_response import TopicCreatePromptsResponse
 
 __all__ = ["TopicResource", "AsyncTopicResource"]
 
@@ -60,7 +57,7 @@ class TopicResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> BinaryAPIResponse:
+    ) -> TopicCreatePromptsResponse:
         """
         Returns analysis and metrics for all prompts with frequency over time by website
         and topic ID
@@ -74,7 +71,6 @@ class TopicResource(SyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        extra_headers = {"Accept": "*/*", **(extra_headers or {})}
         return self._post(
             "/api/beta/topic/prompts",
             body=maybe_transform(
@@ -95,7 +91,7 @@ class TopicResource(SyncAPIResource):
                     {"website_topic_id": website_topic_id}, topic_create_prompts_params.TopicCreatePromptsParams
                 ),
             ),
-            cast_to=BinaryAPIResponse,
+            cast_to=TopicCreatePromptsResponse,
         )
 
 
@@ -133,7 +129,7 @@ class AsyncTopicResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> AsyncBinaryAPIResponse:
+    ) -> TopicCreatePromptsResponse:
         """
         Returns analysis and metrics for all prompts with frequency over time by website
         and topic ID
@@ -147,7 +143,6 @@ class AsyncTopicResource(AsyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        extra_headers = {"Accept": "*/*", **(extra_headers or {})}
         return await self._post(
             "/api/beta/topic/prompts",
             body=await async_maybe_transform(
@@ -168,7 +163,7 @@ class AsyncTopicResource(AsyncAPIResource):
                     {"website_topic_id": website_topic_id}, topic_create_prompts_params.TopicCreatePromptsParams
                 ),
             ),
-            cast_to=AsyncBinaryAPIResponse,
+            cast_to=TopicCreatePromptsResponse,
         )
 
 
@@ -176,9 +171,8 @@ class TopicResourceWithRawResponse:
     def __init__(self, topic: TopicResource) -> None:
         self._topic = topic
 
-        self.create_prompts = to_custom_raw_response_wrapper(
+        self.create_prompts = to_raw_response_wrapper(
             topic.create_prompts,
-            BinaryAPIResponse,
         )
 
 
@@ -186,9 +180,8 @@ class AsyncTopicResourceWithRawResponse:
     def __init__(self, topic: AsyncTopicResource) -> None:
         self._topic = topic
 
-        self.create_prompts = async_to_custom_raw_response_wrapper(
+        self.create_prompts = async_to_raw_response_wrapper(
             topic.create_prompts,
-            AsyncBinaryAPIResponse,
         )
 
 
@@ -196,9 +189,8 @@ class TopicResourceWithStreamingResponse:
     def __init__(self, topic: TopicResource) -> None:
         self._topic = topic
 
-        self.create_prompts = to_custom_streamed_response_wrapper(
+        self.create_prompts = to_streamed_response_wrapper(
             topic.create_prompts,
-            StreamedBinaryAPIResponse,
         )
 
 
@@ -206,7 +198,6 @@ class AsyncTopicResourceWithStreamingResponse:
     def __init__(self, topic: AsyncTopicResource) -> None:
         self._topic = topic
 
-        self.create_prompts = async_to_custom_streamed_response_wrapper(
+        self.create_prompts = async_to_streamed_response_wrapper(
             topic.create_prompts,
-            AsyncStreamedBinaryAPIResponse,
         )

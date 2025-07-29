@@ -5,17 +5,15 @@ from __future__ import annotations
 import os
 from typing import Any, cast
 
-import httpx
 import pytest
-from respx import MockRouter
 
 from anvil import Anvil, AsyncAnvil
-from anvil._response import (
-    BinaryAPIResponse,
-    AsyncBinaryAPIResponse,
-    StreamedBinaryAPIResponse,
-    AsyncStreamedBinaryAPIResponse,
+from anvil.types import (
+    BetaCreateTopicResponse,
+    BetaRetrievePromptResponse,
+    BetaRetrieveMetadataResponse,
 )
+from tests.utils import assert_matches_type
 
 base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
 
@@ -25,25 +23,18 @@ class TestBeta:
 
     @pytest.mark.skip()
     @parametrize
-    @pytest.mark.respx(base_url=base_url)
-    def test_method_create_topic(self, client: Anvil, respx_mock: MockRouter) -> None:
-        respx_mock.post("/api/beta/topics").mock(return_value=httpx.Response(200, json={"foo": "bar"}))
+    def test_method_create_topic(self, client: Anvil) -> None:
         beta = client.beta.create_topic(
             from_date=0,
             llm_provider="llmProvider",
             tag_ids=["string"],
             to_date=0,
         )
-        assert beta.is_closed
-        assert beta.json() == {"foo": "bar"}
-        assert cast(Any, beta.is_closed) is True
-        assert isinstance(beta, BinaryAPIResponse)
+        assert_matches_type(BetaCreateTopicResponse, beta, path=["response"])
 
     @pytest.mark.skip()
     @parametrize
-    @pytest.mark.respx(base_url=base_url)
-    def test_method_create_topic_with_all_params(self, client: Anvil, respx_mock: MockRouter) -> None:
-        respx_mock.post("/api/beta/topics").mock(return_value=httpx.Response(200, json={"foo": "bar"}))
+    def test_method_create_topic_with_all_params(self, client: Anvil) -> None:
         beta = client.beta.create_topic(
             from_date=0,
             llm_provider="llmProvider",
@@ -52,132 +43,101 @@ class TestBeta:
             archive=True,
             competitor_url="competitorUrl",
         )
-        assert beta.is_closed
-        assert beta.json() == {"foo": "bar"}
-        assert cast(Any, beta.is_closed) is True
-        assert isinstance(beta, BinaryAPIResponse)
+        assert_matches_type(BetaCreateTopicResponse, beta, path=["response"])
 
     @pytest.mark.skip()
     @parametrize
-    @pytest.mark.respx(base_url=base_url)
-    def test_raw_response_create_topic(self, client: Anvil, respx_mock: MockRouter) -> None:
-        respx_mock.post("/api/beta/topics").mock(return_value=httpx.Response(200, json={"foo": "bar"}))
-
-        beta = client.beta.with_raw_response.create_topic(
+    def test_raw_response_create_topic(self, client: Anvil) -> None:
+        response = client.beta.with_raw_response.create_topic(
             from_date=0,
             llm_provider="llmProvider",
             tag_ids=["string"],
             to_date=0,
         )
 
-        assert beta.is_closed is True
-        assert beta.http_request.headers.get("X-Stainless-Lang") == "python"
-        assert beta.json() == {"foo": "bar"}
-        assert isinstance(beta, BinaryAPIResponse)
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        beta = response.parse()
+        assert_matches_type(BetaCreateTopicResponse, beta, path=["response"])
 
     @pytest.mark.skip()
     @parametrize
-    @pytest.mark.respx(base_url=base_url)
-    def test_streaming_response_create_topic(self, client: Anvil, respx_mock: MockRouter) -> None:
-        respx_mock.post("/api/beta/topics").mock(return_value=httpx.Response(200, json={"foo": "bar"}))
+    def test_streaming_response_create_topic(self, client: Anvil) -> None:
         with client.beta.with_streaming_response.create_topic(
             from_date=0,
             llm_provider="llmProvider",
             tag_ids=["string"],
             to_date=0,
-        ) as beta:
-            assert not beta.is_closed
-            assert beta.http_request.headers.get("X-Stainless-Lang") == "python"
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
-            assert beta.json() == {"foo": "bar"}
-            assert cast(Any, beta.is_closed) is True
-            assert isinstance(beta, StreamedBinaryAPIResponse)
+            beta = response.parse()
+            assert_matches_type(BetaCreateTopicResponse, beta, path=["response"])
 
-        assert cast(Any, beta.is_closed) is True
+        assert cast(Any, response.is_closed) is True
 
     @pytest.mark.skip()
     @parametrize
-    @pytest.mark.respx(base_url=base_url)
-    def test_method_retrieve_metadata(self, client: Anvil, respx_mock: MockRouter) -> None:
-        respx_mock.get("/api/beta/metadata").mock(return_value=httpx.Response(200, json={"foo": "bar"}))
+    def test_method_retrieve_metadata(self, client: Anvil) -> None:
         beta = client.beta.retrieve_metadata()
-        assert beta.is_closed
-        assert beta.json() == {"foo": "bar"}
-        assert cast(Any, beta.is_closed) is True
-        assert isinstance(beta, BinaryAPIResponse)
+        assert_matches_type(BetaRetrieveMetadataResponse, beta, path=["response"])
 
     @pytest.mark.skip()
     @parametrize
-    @pytest.mark.respx(base_url=base_url)
-    def test_raw_response_retrieve_metadata(self, client: Anvil, respx_mock: MockRouter) -> None:
-        respx_mock.get("/api/beta/metadata").mock(return_value=httpx.Response(200, json={"foo": "bar"}))
+    def test_raw_response_retrieve_metadata(self, client: Anvil) -> None:
+        response = client.beta.with_raw_response.retrieve_metadata()
 
-        beta = client.beta.with_raw_response.retrieve_metadata()
-
-        assert beta.is_closed is True
-        assert beta.http_request.headers.get("X-Stainless-Lang") == "python"
-        assert beta.json() == {"foo": "bar"}
-        assert isinstance(beta, BinaryAPIResponse)
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        beta = response.parse()
+        assert_matches_type(BetaRetrieveMetadataResponse, beta, path=["response"])
 
     @pytest.mark.skip()
     @parametrize
-    @pytest.mark.respx(base_url=base_url)
-    def test_streaming_response_retrieve_metadata(self, client: Anvil, respx_mock: MockRouter) -> None:
-        respx_mock.get("/api/beta/metadata").mock(return_value=httpx.Response(200, json={"foo": "bar"}))
-        with client.beta.with_streaming_response.retrieve_metadata() as beta:
-            assert not beta.is_closed
-            assert beta.http_request.headers.get("X-Stainless-Lang") == "python"
+    def test_streaming_response_retrieve_metadata(self, client: Anvil) -> None:
+        with client.beta.with_streaming_response.retrieve_metadata() as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
-            assert beta.json() == {"foo": "bar"}
-            assert cast(Any, beta.is_closed) is True
-            assert isinstance(beta, StreamedBinaryAPIResponse)
+            beta = response.parse()
+            assert_matches_type(BetaRetrieveMetadataResponse, beta, path=["response"])
 
-        assert cast(Any, beta.is_closed) is True
+        assert cast(Any, response.is_closed) is True
 
     @pytest.mark.skip()
     @parametrize
-    @pytest.mark.respx(base_url=base_url)
-    def test_method_retrieve_prompt(self, client: Anvil, respx_mock: MockRouter) -> None:
-        respx_mock.get("/api/beta/prompt").mock(return_value=httpx.Response(200, json={"foo": "bar"}))
+    def test_method_retrieve_prompt(self, client: Anvil) -> None:
         beta = client.beta.retrieve_prompt(
             prompt_id="promptId",
         )
-        assert beta.is_closed
-        assert beta.json() == {"foo": "bar"}
-        assert cast(Any, beta.is_closed) is True
-        assert isinstance(beta, BinaryAPIResponse)
+        assert_matches_type(BetaRetrievePromptResponse, beta, path=["response"])
 
     @pytest.mark.skip()
     @parametrize
-    @pytest.mark.respx(base_url=base_url)
-    def test_raw_response_retrieve_prompt(self, client: Anvil, respx_mock: MockRouter) -> None:
-        respx_mock.get("/api/beta/prompt").mock(return_value=httpx.Response(200, json={"foo": "bar"}))
-
-        beta = client.beta.with_raw_response.retrieve_prompt(
+    def test_raw_response_retrieve_prompt(self, client: Anvil) -> None:
+        response = client.beta.with_raw_response.retrieve_prompt(
             prompt_id="promptId",
         )
 
-        assert beta.is_closed is True
-        assert beta.http_request.headers.get("X-Stainless-Lang") == "python"
-        assert beta.json() == {"foo": "bar"}
-        assert isinstance(beta, BinaryAPIResponse)
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        beta = response.parse()
+        assert_matches_type(BetaRetrievePromptResponse, beta, path=["response"])
 
     @pytest.mark.skip()
     @parametrize
-    @pytest.mark.respx(base_url=base_url)
-    def test_streaming_response_retrieve_prompt(self, client: Anvil, respx_mock: MockRouter) -> None:
-        respx_mock.get("/api/beta/prompt").mock(return_value=httpx.Response(200, json={"foo": "bar"}))
+    def test_streaming_response_retrieve_prompt(self, client: Anvil) -> None:
         with client.beta.with_streaming_response.retrieve_prompt(
             prompt_id="promptId",
-        ) as beta:
-            assert not beta.is_closed
-            assert beta.http_request.headers.get("X-Stainless-Lang") == "python"
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
-            assert beta.json() == {"foo": "bar"}
-            assert cast(Any, beta.is_closed) is True
-            assert isinstance(beta, StreamedBinaryAPIResponse)
+            beta = response.parse()
+            assert_matches_type(BetaRetrievePromptResponse, beta, path=["response"])
 
-        assert cast(Any, beta.is_closed) is True
+        assert cast(Any, response.is_closed) is True
 
 
 class TestAsyncBeta:
@@ -187,25 +147,18 @@ class TestAsyncBeta:
 
     @pytest.mark.skip()
     @parametrize
-    @pytest.mark.respx(base_url=base_url)
-    async def test_method_create_topic(self, async_client: AsyncAnvil, respx_mock: MockRouter) -> None:
-        respx_mock.post("/api/beta/topics").mock(return_value=httpx.Response(200, json={"foo": "bar"}))
+    async def test_method_create_topic(self, async_client: AsyncAnvil) -> None:
         beta = await async_client.beta.create_topic(
             from_date=0,
             llm_provider="llmProvider",
             tag_ids=["string"],
             to_date=0,
         )
-        assert beta.is_closed
-        assert await beta.json() == {"foo": "bar"}
-        assert cast(Any, beta.is_closed) is True
-        assert isinstance(beta, AsyncBinaryAPIResponse)
+        assert_matches_type(BetaCreateTopicResponse, beta, path=["response"])
 
     @pytest.mark.skip()
     @parametrize
-    @pytest.mark.respx(base_url=base_url)
-    async def test_method_create_topic_with_all_params(self, async_client: AsyncAnvil, respx_mock: MockRouter) -> None:
-        respx_mock.post("/api/beta/topics").mock(return_value=httpx.Response(200, json={"foo": "bar"}))
+    async def test_method_create_topic_with_all_params(self, async_client: AsyncAnvil) -> None:
         beta = await async_client.beta.create_topic(
             from_date=0,
             llm_provider="llmProvider",
@@ -214,129 +167,98 @@ class TestAsyncBeta:
             archive=True,
             competitor_url="competitorUrl",
         )
-        assert beta.is_closed
-        assert await beta.json() == {"foo": "bar"}
-        assert cast(Any, beta.is_closed) is True
-        assert isinstance(beta, AsyncBinaryAPIResponse)
+        assert_matches_type(BetaCreateTopicResponse, beta, path=["response"])
 
     @pytest.mark.skip()
     @parametrize
-    @pytest.mark.respx(base_url=base_url)
-    async def test_raw_response_create_topic(self, async_client: AsyncAnvil, respx_mock: MockRouter) -> None:
-        respx_mock.post("/api/beta/topics").mock(return_value=httpx.Response(200, json={"foo": "bar"}))
-
-        beta = await async_client.beta.with_raw_response.create_topic(
+    async def test_raw_response_create_topic(self, async_client: AsyncAnvil) -> None:
+        response = await async_client.beta.with_raw_response.create_topic(
             from_date=0,
             llm_provider="llmProvider",
             tag_ids=["string"],
             to_date=0,
         )
 
-        assert beta.is_closed is True
-        assert beta.http_request.headers.get("X-Stainless-Lang") == "python"
-        assert await beta.json() == {"foo": "bar"}
-        assert isinstance(beta, AsyncBinaryAPIResponse)
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        beta = await response.parse()
+        assert_matches_type(BetaCreateTopicResponse, beta, path=["response"])
 
     @pytest.mark.skip()
     @parametrize
-    @pytest.mark.respx(base_url=base_url)
-    async def test_streaming_response_create_topic(self, async_client: AsyncAnvil, respx_mock: MockRouter) -> None:
-        respx_mock.post("/api/beta/topics").mock(return_value=httpx.Response(200, json={"foo": "bar"}))
+    async def test_streaming_response_create_topic(self, async_client: AsyncAnvil) -> None:
         async with async_client.beta.with_streaming_response.create_topic(
             from_date=0,
             llm_provider="llmProvider",
             tag_ids=["string"],
             to_date=0,
-        ) as beta:
-            assert not beta.is_closed
-            assert beta.http_request.headers.get("X-Stainless-Lang") == "python"
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
-            assert await beta.json() == {"foo": "bar"}
-            assert cast(Any, beta.is_closed) is True
-            assert isinstance(beta, AsyncStreamedBinaryAPIResponse)
+            beta = await response.parse()
+            assert_matches_type(BetaCreateTopicResponse, beta, path=["response"])
 
-        assert cast(Any, beta.is_closed) is True
+        assert cast(Any, response.is_closed) is True
 
     @pytest.mark.skip()
     @parametrize
-    @pytest.mark.respx(base_url=base_url)
-    async def test_method_retrieve_metadata(self, async_client: AsyncAnvil, respx_mock: MockRouter) -> None:
-        respx_mock.get("/api/beta/metadata").mock(return_value=httpx.Response(200, json={"foo": "bar"}))
+    async def test_method_retrieve_metadata(self, async_client: AsyncAnvil) -> None:
         beta = await async_client.beta.retrieve_metadata()
-        assert beta.is_closed
-        assert await beta.json() == {"foo": "bar"}
-        assert cast(Any, beta.is_closed) is True
-        assert isinstance(beta, AsyncBinaryAPIResponse)
+        assert_matches_type(BetaRetrieveMetadataResponse, beta, path=["response"])
 
     @pytest.mark.skip()
     @parametrize
-    @pytest.mark.respx(base_url=base_url)
-    async def test_raw_response_retrieve_metadata(self, async_client: AsyncAnvil, respx_mock: MockRouter) -> None:
-        respx_mock.get("/api/beta/metadata").mock(return_value=httpx.Response(200, json={"foo": "bar"}))
+    async def test_raw_response_retrieve_metadata(self, async_client: AsyncAnvil) -> None:
+        response = await async_client.beta.with_raw_response.retrieve_metadata()
 
-        beta = await async_client.beta.with_raw_response.retrieve_metadata()
-
-        assert beta.is_closed is True
-        assert beta.http_request.headers.get("X-Stainless-Lang") == "python"
-        assert await beta.json() == {"foo": "bar"}
-        assert isinstance(beta, AsyncBinaryAPIResponse)
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        beta = await response.parse()
+        assert_matches_type(BetaRetrieveMetadataResponse, beta, path=["response"])
 
     @pytest.mark.skip()
     @parametrize
-    @pytest.mark.respx(base_url=base_url)
-    async def test_streaming_response_retrieve_metadata(self, async_client: AsyncAnvil, respx_mock: MockRouter) -> None:
-        respx_mock.get("/api/beta/metadata").mock(return_value=httpx.Response(200, json={"foo": "bar"}))
-        async with async_client.beta.with_streaming_response.retrieve_metadata() as beta:
-            assert not beta.is_closed
-            assert beta.http_request.headers.get("X-Stainless-Lang") == "python"
+    async def test_streaming_response_retrieve_metadata(self, async_client: AsyncAnvil) -> None:
+        async with async_client.beta.with_streaming_response.retrieve_metadata() as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
-            assert await beta.json() == {"foo": "bar"}
-            assert cast(Any, beta.is_closed) is True
-            assert isinstance(beta, AsyncStreamedBinaryAPIResponse)
+            beta = await response.parse()
+            assert_matches_type(BetaRetrieveMetadataResponse, beta, path=["response"])
 
-        assert cast(Any, beta.is_closed) is True
+        assert cast(Any, response.is_closed) is True
 
     @pytest.mark.skip()
     @parametrize
-    @pytest.mark.respx(base_url=base_url)
-    async def test_method_retrieve_prompt(self, async_client: AsyncAnvil, respx_mock: MockRouter) -> None:
-        respx_mock.get("/api/beta/prompt").mock(return_value=httpx.Response(200, json={"foo": "bar"}))
+    async def test_method_retrieve_prompt(self, async_client: AsyncAnvil) -> None:
         beta = await async_client.beta.retrieve_prompt(
             prompt_id="promptId",
         )
-        assert beta.is_closed
-        assert await beta.json() == {"foo": "bar"}
-        assert cast(Any, beta.is_closed) is True
-        assert isinstance(beta, AsyncBinaryAPIResponse)
+        assert_matches_type(BetaRetrievePromptResponse, beta, path=["response"])
 
     @pytest.mark.skip()
     @parametrize
-    @pytest.mark.respx(base_url=base_url)
-    async def test_raw_response_retrieve_prompt(self, async_client: AsyncAnvil, respx_mock: MockRouter) -> None:
-        respx_mock.get("/api/beta/prompt").mock(return_value=httpx.Response(200, json={"foo": "bar"}))
-
-        beta = await async_client.beta.with_raw_response.retrieve_prompt(
+    async def test_raw_response_retrieve_prompt(self, async_client: AsyncAnvil) -> None:
+        response = await async_client.beta.with_raw_response.retrieve_prompt(
             prompt_id="promptId",
         )
 
-        assert beta.is_closed is True
-        assert beta.http_request.headers.get("X-Stainless-Lang") == "python"
-        assert await beta.json() == {"foo": "bar"}
-        assert isinstance(beta, AsyncBinaryAPIResponse)
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        beta = await response.parse()
+        assert_matches_type(BetaRetrievePromptResponse, beta, path=["response"])
 
     @pytest.mark.skip()
     @parametrize
-    @pytest.mark.respx(base_url=base_url)
-    async def test_streaming_response_retrieve_prompt(self, async_client: AsyncAnvil, respx_mock: MockRouter) -> None:
-        respx_mock.get("/api/beta/prompt").mock(return_value=httpx.Response(200, json={"foo": "bar"}))
+    async def test_streaming_response_retrieve_prompt(self, async_client: AsyncAnvil) -> None:
         async with async_client.beta.with_streaming_response.retrieve_prompt(
             prompt_id="promptId",
-        ) as beta:
-            assert not beta.is_closed
-            assert beta.http_request.headers.get("X-Stainless-Lang") == "python"
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
-            assert await beta.json() == {"foo": "bar"}
-            assert cast(Any, beta.is_closed) is True
-            assert isinstance(beta, AsyncStreamedBinaryAPIResponse)
+            beta = await response.parse()
+            assert_matches_type(BetaRetrievePromptResponse, beta, path=["response"])
 
-        assert cast(Any, beta.is_closed) is True
+        assert cast(Any, response.is_closed) is True

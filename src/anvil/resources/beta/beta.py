@@ -20,16 +20,15 @@ from ..._utils import maybe_transform, async_maybe_transform
 from ..._compat import cached_property
 from ..._resource import SyncAPIResource, AsyncAPIResource
 from ..._response import (
-    BinaryAPIResponse,
-    AsyncBinaryAPIResponse,
-    StreamedBinaryAPIResponse,
-    AsyncStreamedBinaryAPIResponse,
-    to_custom_raw_response_wrapper,
-    to_custom_streamed_response_wrapper,
-    async_to_custom_raw_response_wrapper,
-    async_to_custom_streamed_response_wrapper,
+    to_raw_response_wrapper,
+    to_streamed_response_wrapper,
+    async_to_raw_response_wrapper,
+    async_to_streamed_response_wrapper,
 )
 from ..._base_client import make_request_options
+from ...types.beta_create_topic_response import BetaCreateTopicResponse
+from ...types.beta_retrieve_prompt_response import BetaRetrievePromptResponse
+from ...types.beta_retrieve_metadata_response import BetaRetrieveMetadataResponse
 
 __all__ = ["BetaResource", "AsyncBetaResource"]
 
@@ -73,7 +72,7 @@ class BetaResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> BinaryAPIResponse:
+    ) -> BetaCreateTopicResponse:
         """
         Returns analysis and metrics for all the topics by website ID
 
@@ -86,7 +85,6 @@ class BetaResource(SyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        extra_headers = {"Accept": "*/*", **(extra_headers or {})}
         return self._post(
             "/api/beta/topics",
             body=maybe_transform(
@@ -103,7 +101,7 @@ class BetaResource(SyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=BinaryAPIResponse,
+            cast_to=BetaCreateTopicResponse,
         )
 
     def retrieve_metadata(
@@ -115,15 +113,14 @@ class BetaResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> BinaryAPIResponse:
+    ) -> BetaRetrieveMetadataResponse:
         """Returns all metadata by website ID"""
-        extra_headers = {"Accept": "*/*", **(extra_headers or {})}
         return self._get(
             "/api/beta/metadata",
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=BinaryAPIResponse,
+            cast_to=BetaRetrieveMetadataResponse,
         )
 
     def retrieve_prompt(
@@ -136,7 +133,7 @@ class BetaResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> BinaryAPIResponse:
+    ) -> BetaRetrievePromptResponse:
         """
         Returns all related metrics data by prompt ID
 
@@ -149,7 +146,6 @@ class BetaResource(SyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        extra_headers = {"Accept": "*/*", **(extra_headers or {})}
         return self._get(
             "/api/beta/prompt",
             options=make_request_options(
@@ -159,7 +155,7 @@ class BetaResource(SyncAPIResource):
                 timeout=timeout,
                 query=maybe_transform({"prompt_id": prompt_id}, beta_retrieve_prompt_params.BetaRetrievePromptParams),
             ),
-            cast_to=BinaryAPIResponse,
+            cast_to=BetaRetrievePromptResponse,
         )
 
 
@@ -202,7 +198,7 @@ class AsyncBetaResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> AsyncBinaryAPIResponse:
+    ) -> BetaCreateTopicResponse:
         """
         Returns analysis and metrics for all the topics by website ID
 
@@ -215,7 +211,6 @@ class AsyncBetaResource(AsyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        extra_headers = {"Accept": "*/*", **(extra_headers or {})}
         return await self._post(
             "/api/beta/topics",
             body=await async_maybe_transform(
@@ -232,7 +227,7 @@ class AsyncBetaResource(AsyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=AsyncBinaryAPIResponse,
+            cast_to=BetaCreateTopicResponse,
         )
 
     async def retrieve_metadata(
@@ -244,15 +239,14 @@ class AsyncBetaResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> AsyncBinaryAPIResponse:
+    ) -> BetaRetrieveMetadataResponse:
         """Returns all metadata by website ID"""
-        extra_headers = {"Accept": "*/*", **(extra_headers or {})}
         return await self._get(
             "/api/beta/metadata",
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=AsyncBinaryAPIResponse,
+            cast_to=BetaRetrieveMetadataResponse,
         )
 
     async def retrieve_prompt(
@@ -265,7 +259,7 @@ class AsyncBetaResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> AsyncBinaryAPIResponse:
+    ) -> BetaRetrievePromptResponse:
         """
         Returns all related metrics data by prompt ID
 
@@ -278,7 +272,6 @@ class AsyncBetaResource(AsyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        extra_headers = {"Accept": "*/*", **(extra_headers or {})}
         return await self._get(
             "/api/beta/prompt",
             options=make_request_options(
@@ -290,7 +283,7 @@ class AsyncBetaResource(AsyncAPIResource):
                     {"prompt_id": prompt_id}, beta_retrieve_prompt_params.BetaRetrievePromptParams
                 ),
             ),
-            cast_to=AsyncBinaryAPIResponse,
+            cast_to=BetaRetrievePromptResponse,
         )
 
 
@@ -298,17 +291,14 @@ class BetaResourceWithRawResponse:
     def __init__(self, beta: BetaResource) -> None:
         self._beta = beta
 
-        self.create_topic = to_custom_raw_response_wrapper(
+        self.create_topic = to_raw_response_wrapper(
             beta.create_topic,
-            BinaryAPIResponse,
         )
-        self.retrieve_metadata = to_custom_raw_response_wrapper(
+        self.retrieve_metadata = to_raw_response_wrapper(
             beta.retrieve_metadata,
-            BinaryAPIResponse,
         )
-        self.retrieve_prompt = to_custom_raw_response_wrapper(
+        self.retrieve_prompt = to_raw_response_wrapper(
             beta.retrieve_prompt,
-            BinaryAPIResponse,
         )
 
     @cached_property
@@ -320,17 +310,14 @@ class AsyncBetaResourceWithRawResponse:
     def __init__(self, beta: AsyncBetaResource) -> None:
         self._beta = beta
 
-        self.create_topic = async_to_custom_raw_response_wrapper(
+        self.create_topic = async_to_raw_response_wrapper(
             beta.create_topic,
-            AsyncBinaryAPIResponse,
         )
-        self.retrieve_metadata = async_to_custom_raw_response_wrapper(
+        self.retrieve_metadata = async_to_raw_response_wrapper(
             beta.retrieve_metadata,
-            AsyncBinaryAPIResponse,
         )
-        self.retrieve_prompt = async_to_custom_raw_response_wrapper(
+        self.retrieve_prompt = async_to_raw_response_wrapper(
             beta.retrieve_prompt,
-            AsyncBinaryAPIResponse,
         )
 
     @cached_property
@@ -342,17 +329,14 @@ class BetaResourceWithStreamingResponse:
     def __init__(self, beta: BetaResource) -> None:
         self._beta = beta
 
-        self.create_topic = to_custom_streamed_response_wrapper(
+        self.create_topic = to_streamed_response_wrapper(
             beta.create_topic,
-            StreamedBinaryAPIResponse,
         )
-        self.retrieve_metadata = to_custom_streamed_response_wrapper(
+        self.retrieve_metadata = to_streamed_response_wrapper(
             beta.retrieve_metadata,
-            StreamedBinaryAPIResponse,
         )
-        self.retrieve_prompt = to_custom_streamed_response_wrapper(
+        self.retrieve_prompt = to_streamed_response_wrapper(
             beta.retrieve_prompt,
-            StreamedBinaryAPIResponse,
         )
 
     @cached_property
@@ -364,17 +348,14 @@ class AsyncBetaResourceWithStreamingResponse:
     def __init__(self, beta: AsyncBetaResource) -> None:
         self._beta = beta
 
-        self.create_topic = async_to_custom_streamed_response_wrapper(
+        self.create_topic = async_to_streamed_response_wrapper(
             beta.create_topic,
-            AsyncStreamedBinaryAPIResponse,
         )
-        self.retrieve_metadata = async_to_custom_streamed_response_wrapper(
+        self.retrieve_metadata = async_to_streamed_response_wrapper(
             beta.retrieve_metadata,
-            AsyncStreamedBinaryAPIResponse,
         )
-        self.retrieve_prompt = async_to_custom_streamed_response_wrapper(
+        self.retrieve_prompt = async_to_streamed_response_wrapper(
             beta.retrieve_prompt,
-            AsyncStreamedBinaryAPIResponse,
         )
 
     @cached_property

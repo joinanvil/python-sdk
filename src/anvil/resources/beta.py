@@ -6,22 +6,22 @@ from typing import List
 
 import httpx
 
-from ...types import beta_create_topic_params, beta_retrieve_prompt_params, beta_create_prompt_metrics_params
-from ..._types import NOT_GIVEN, Body, Query, Headers, NotGiven
-from ..._utils import maybe_transform, async_maybe_transform
-from ..._compat import cached_property
-from ..._resource import SyncAPIResource, AsyncAPIResource
-from ..._response import (
+from ..types import beta_create_topic_params, beta_retrieve_prompt_params, beta_create_prompt_metrics_params
+from .._types import NOT_GIVEN, Body, Query, Headers, NotGiven
+from .._utils import maybe_transform, async_maybe_transform
+from .._compat import cached_property
+from .._resource import SyncAPIResource, AsyncAPIResource
+from .._response import (
     to_raw_response_wrapper,
     to_streamed_response_wrapper,
     async_to_raw_response_wrapper,
     async_to_streamed_response_wrapper,
 )
-from ..._base_client import make_request_options
-from ...types.beta_create_topic_response import BetaCreateTopicResponse
-from ...types.beta_retrieve_prompt_response import BetaRetrievePromptResponse
-from ...types.beta_retrieve_metadata_response import BetaRetrieveMetadataResponse
-from ...types.beta_create_prompt_metrics_response import BetaCreatePromptMetricsResponse
+from .._base_client import make_request_options
+from ..types.beta_create_topic_response import BetaCreateTopicResponse
+from ..types.beta_retrieve_prompt_response import BetaRetrievePromptResponse
+from ..types.beta_retrieve_metadata_response import BetaRetrieveMetadataResponse
+from ..types.beta_create_prompt_metrics_response import BetaCreatePromptMetricsResponse
 
 __all__ = ["BetaResource", "AsyncBetaResource"]
 

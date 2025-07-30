@@ -1,12 +1,17 @@
 # Changelog
 
-## 0.0.1-alpha.2 (2025-07-25)
+## 0.1.0-alpha.1 (2025-07-30)
 
-Full Changelog: [v0.0.1-alpha.1...v0.0.1-alpha.2](https://github.com/Blueplanai/python-sdk/compare/v0.0.1-alpha.1...v0.0.1-alpha.2)
+Full Changelog: [v0.0.1-alpha.1...v0.1.0-alpha.1](https://github.com/joinanvil/python-sdk/compare/v0.0.1-alpha.1...v0.1.0-alpha.1)
+
+### Features
+
+* **api:** manual updates ([eb8668b](https://github.com/joinanvil/python-sdk/commit/eb8668b4222475b12787cbf54109dc60917ad476))
+
 
 ### Chores
 
-* **project:** add settings file for vscode ([7c4eb07](https://github.com/Blueplanai/python-sdk/commit/7c4eb07b387d3ecadc7c317d402ffd1502fc09f0))
+* sync repo ([09b9127](https://github.com/joinanvil/python-sdk/commit/09b9127d3c1d3a8b0db8613057e6b105d9896efd))
 
 ## 0.0.1-alpha.1 (2025-07-23)
 

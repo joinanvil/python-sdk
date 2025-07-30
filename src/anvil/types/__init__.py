@@ -3,4 +3,7 @@
 from __future__ import annotations
 
 from .beta_create_topic_params import BetaCreateTopicParams as BetaCreateTopicParams
+from .beta_create_topic_response import BetaCreateTopicResponse as BetaCreateTopicResponse
 from .beta_retrieve_prompt_params import BetaRetrievePromptParams as BetaRetrievePromptParams
+from .beta_retrieve_prompt_response import BetaRetrievePromptResponse as BetaRetrievePromptResponse
+from .beta_retrieve_metadata_response import BetaRetrieveMetadataResponse as BetaRetrieveMetadataResponse

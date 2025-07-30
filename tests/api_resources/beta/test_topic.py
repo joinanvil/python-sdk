@@ -5,17 +5,11 @@ from __future__ import annotations
 import os
 from typing import Any, cast
 
-import httpx
 import pytest
-from respx import MockRouter
 
 from anvil import Anvil, AsyncAnvil
-from anvil._response import (
-    BinaryAPIResponse,
-    AsyncBinaryAPIResponse,
-    StreamedBinaryAPIResponse,
-    AsyncStreamedBinaryAPIResponse,
-)
+from tests.utils import assert_matches_type
+from anvil.types.beta import TopicCreatePromptsResponse
 
 base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
 
@@ -25,9 +19,7 @@ class TestTopic:
 
     @pytest.mark.skip()
     @parametrize
-    @pytest.mark.respx(base_url=base_url)
-    def test_method_create_prompts(self, client: Anvil, respx_mock: MockRouter) -> None:
-        respx_mock.post("/api/beta/topic/prompts").mock(return_value=httpx.Response(200, json={"foo": "bar"}))
+    def test_method_create_prompts(self, client: Anvil) -> None:
         topic = client.beta.topic.create_prompts(
             website_topic_id="websiteTopicId",
             from_date=0,
@@ -35,18 +27,12 @@ class TestTopic:
             tag_ids=["string"],
             to_date=0,
         )
-        assert topic.is_closed
-        assert topic.json() == {"foo": "bar"}
-        assert cast(Any, topic.is_closed) is True
-        assert isinstance(topic, BinaryAPIResponse)
+        assert_matches_type(TopicCreatePromptsResponse, topic, path=["response"])
 
     @pytest.mark.skip()
     @parametrize
-    @pytest.mark.respx(base_url=base_url)
-    def test_raw_response_create_prompts(self, client: Anvil, respx_mock: MockRouter) -> None:
-        respx_mock.post("/api/beta/topic/prompts").mock(return_value=httpx.Response(200, json={"foo": "bar"}))
-
-        topic = client.beta.topic.with_raw_response.create_prompts(
+    def test_raw_response_create_prompts(self, client: Anvil) -> None:
+        response = client.beta.topic.with_raw_response.create_prompts(
             website_topic_id="websiteTopicId",
             from_date=0,
             llm_provider="llmProvider",
@@ -54,31 +40,28 @@ class TestTopic:
             to_date=0,
         )
 
-        assert topic.is_closed is True
-        assert topic.http_request.headers.get("X-Stainless-Lang") == "python"
-        assert topic.json() == {"foo": "bar"}
-        assert isinstance(topic, BinaryAPIResponse)
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        topic = response.parse()
+        assert_matches_type(TopicCreatePromptsResponse, topic, path=["response"])
 
     @pytest.mark.skip()
     @parametrize
-    @pytest.mark.respx(base_url=base_url)
-    def test_streaming_response_create_prompts(self, client: Anvil, respx_mock: MockRouter) -> None:
-        respx_mock.post("/api/beta/topic/prompts").mock(return_value=httpx.Response(200, json={"foo": "bar"}))
+    def test_streaming_response_create_prompts(self, client: Anvil) -> None:
         with client.beta.topic.with_streaming_response.create_prompts(
             website_topic_id="websiteTopicId",
             from_date=0,
             llm_provider="llmProvider",
             tag_ids=["string"],
             to_date=0,
-        ) as topic:
-            assert not topic.is_closed
-            assert topic.http_request.headers.get("X-Stainless-Lang") == "python"
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
-            assert topic.json() == {"foo": "bar"}
-            assert cast(Any, topic.is_closed) is True
-            assert isinstance(topic, StreamedBinaryAPIResponse)
+            topic = response.parse()
+            assert_matches_type(TopicCreatePromptsResponse, topic, path=["response"])
 
-        assert cast(Any, topic.is_closed) is True
+        assert cast(Any, response.is_closed) is True
 
 
 class TestAsyncTopic:
@@ -88,9 +71,7 @@ class TestAsyncTopic:
 
     @pytest.mark.skip()
     @parametrize
-    @pytest.mark.respx(base_url=base_url)
-    async def test_method_create_prompts(self, async_client: AsyncAnvil, respx_mock: MockRouter) -> None:
-        respx_mock.post("/api/beta/topic/prompts").mock(return_value=httpx.Response(200, json={"foo": "bar"}))
+    async def test_method_create_prompts(self, async_client: AsyncAnvil) -> None:
         topic = await async_client.beta.topic.create_prompts(
             website_topic_id="websiteTopicId",
             from_date=0,
@@ -98,18 +79,12 @@ class TestAsyncTopic:
             tag_ids=["string"],
             to_date=0,
         )
-        assert topic.is_closed
-        assert await topic.json() == {"foo": "bar"}
-        assert cast(Any, topic.is_closed) is True
-        assert isinstance(topic, AsyncBinaryAPIResponse)
+        assert_matches_type(TopicCreatePromptsResponse, topic, path=["response"])
 
     @pytest.mark.skip()
     @parametrize
-    @pytest.mark.respx(base_url=base_url)
-    async def test_raw_response_create_prompts(self, async_client: AsyncAnvil, respx_mock: MockRouter) -> None:
-        respx_mock.post("/api/beta/topic/prompts").mock(return_value=httpx.Response(200, json={"foo": "bar"}))
-
-        topic = await async_client.beta.topic.with_raw_response.create_prompts(
+    async def test_raw_response_create_prompts(self, async_client: AsyncAnvil) -> None:
+        response = await async_client.beta.topic.with_raw_response.create_prompts(
             website_topic_id="websiteTopicId",
             from_date=0,
             llm_provider="llmProvider",
@@ -117,28 +92,25 @@ class TestAsyncTopic:
             to_date=0,
         )
 
-        assert topic.is_closed is True
-        assert topic.http_request.headers.get("X-Stainless-Lang") == "python"
-        assert await topic.json() == {"foo": "bar"}
-        assert isinstance(topic, AsyncBinaryAPIResponse)
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        topic = await response.parse()
+        assert_matches_type(TopicCreatePromptsResponse, topic, path=["response"])
 
     @pytest.mark.skip()
     @parametrize
-    @pytest.mark.respx(base_url=base_url)
-    async def test_streaming_response_create_prompts(self, async_client: AsyncAnvil, respx_mock: MockRouter) -> None:
-        respx_mock.post("/api/beta/topic/prompts").mock(return_value=httpx.Response(200, json={"foo": "bar"}))
+    async def test_streaming_response_create_prompts(self, async_client: AsyncAnvil) -> None:
         async with async_client.beta.topic.with_streaming_response.create_prompts(
             website_topic_id="websiteTopicId",
             from_date=0,
             llm_provider="llmProvider",
             tag_ids=["string"],
             to_date=0,
-        ) as topic:
-            assert not topic.is_closed
-            assert topic.http_request.headers.get("X-Stainless-Lang") == "python"
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
-            assert await topic.json() == {"foo": "bar"}
-            assert cast(Any, topic.is_closed) is True
-            assert isinstance(topic, AsyncStreamedBinaryAPIResponse)
+            topic = await response.parse()
+            assert_matches_type(TopicCreatePromptsResponse, topic, path=["response"])
 
-        assert cast(Any, topic.is_closed) is True
+        assert cast(Any, response.is_closed) is True

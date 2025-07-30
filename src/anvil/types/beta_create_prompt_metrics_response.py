@@ -6,24 +6,24 @@ from typing_extensions import Literal, TypeAlias
 
 from pydantic import Field as FieldInfo
 
-from ..._models import BaseModel
+from .._models import BaseModel
 
 __all__ = [
-    "TopicCreatePromptsResponse",
-    "TopicCreatePromptsResponseItem",
-    "TopicCreatePromptsResponseItemMentionFrequency",
-    "TopicCreatePromptsResponseItemMentionFrequencySery",
-    "TopicCreatePromptsResponseItemSeoMetrics",
+    "BetaCreatePromptMetricsResponse",
+    "BetaCreatePromptMetricsResponseItem",
+    "BetaCreatePromptMetricsResponseItemMentionFrequency",
+    "BetaCreatePromptMetricsResponseItemMentionFrequencySery",
+    "BetaCreatePromptMetricsResponseItemSeoMetrics",
 ]
 
 
-class TopicCreatePromptsResponseItemMentionFrequencySery(BaseModel):
+class BetaCreatePromptMetricsResponseItemMentionFrequencySery(BaseModel):
     date: datetime
 
     value: float
 
 
-class TopicCreatePromptsResponseItemMentionFrequency(BaseModel):
+class BetaCreatePromptMetricsResponseItemMentionFrequency(BaseModel):
     average: Optional[float] = None
 
     data_format: Optional[Literal["NUMBER", "PERCENTAGE", "CURRENCY", "TEXT", "SCORE"]] = FieldInfo(
@@ -166,20 +166,20 @@ class TopicCreatePromptsResponseItemMentionFrequency(BaseModel):
 
     metric_name: Optional[str] = FieldInfo(alias="metricName", default=None)
 
-    series: Optional[List[TopicCreatePromptsResponseItemMentionFrequencySery]] = None
+    series: Optional[List[BetaCreatePromptMetricsResponseItemMentionFrequencySery]] = None
 
     to_date: Optional[datetime] = FieldInfo(alias="toDate", default=None)
 
     value: Optional[float] = None
 
 
-class TopicCreatePromptsResponseItemSeoMetrics(BaseModel):
+class BetaCreatePromptMetricsResponseItemSeoMetrics(BaseModel):
     cpc: Optional[float] = None
 
     search_volume: Optional[int] = FieldInfo(alias="searchVolume", default=None)
 
 
-class TopicCreatePromptsResponseItem(BaseModel):
+class BetaCreatePromptMetricsResponseItem(BaseModel):
     answer_text: Optional[str] = FieldInfo(alias="answerText", default=None)
 
     important_terms: Optional[List[str]] = FieldInfo(alias="importantTerms", default=None)
@@ -188,7 +188,7 @@ class TopicCreatePromptsResponseItem(BaseModel):
 
     latest_run_data: Optional[datetime] = FieldInfo(alias="latestRunData", default=None)
 
-    mention_frequency: Optional[TopicCreatePromptsResponseItemMentionFrequency] = FieldInfo(
+    mention_frequency: Optional[BetaCreatePromptMetricsResponseItemMentionFrequency] = FieldInfo(
         alias="mentionFrequency", default=None
     )
 
@@ -206,11 +206,11 @@ class TopicCreatePromptsResponseItem(BaseModel):
 
     ranking: Optional[float] = None
 
-    seo_metrics: Optional[TopicCreatePromptsResponseItemSeoMetrics] = FieldInfo(alias="seoMetrics", default=None)
+    seo_metrics: Optional[BetaCreatePromptMetricsResponseItemSeoMetrics] = FieldInfo(alias="seoMetrics", default=None)
 
     share_of_voice: Optional[float] = FieldInfo(alias="shareOfVoice", default=None)
 
     sources: Optional[List[str]] = None
 
 
-TopicCreatePromptsResponse: TypeAlias = List[TopicCreatePromptsResponseItem]
+BetaCreatePromptMetricsResponse: TypeAlias = List[BetaCreatePromptMetricsResponseItem]

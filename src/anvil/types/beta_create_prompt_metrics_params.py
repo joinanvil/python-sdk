@@ -5,12 +5,12 @@ from __future__ import annotations
 from typing import List
 from typing_extensions import Required, Annotated, TypedDict
 
-from ..._utils import PropertyInfo
+from .._utils import PropertyInfo
 
-__all__ = ["TopicCreatePromptsParams"]
+__all__ = ["BetaCreatePromptMetricsParams"]
 
 
-class TopicCreatePromptsParams(TypedDict, total=False):
+class BetaCreatePromptMetricsParams(TypedDict, total=False):
     website_topic_id: Required[Annotated[str, PropertyInfo(alias="websiteTopicId")]]
 
     from_date: Required[Annotated[int, PropertyInfo(alias="fromDate")]]

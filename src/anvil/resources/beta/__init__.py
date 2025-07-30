@@ -8,22 +8,8 @@ from .beta import (
     BetaResourceWithStreamingResponse,
     AsyncBetaResourceWithStreamingResponse,
 )
-from .topic import (
-    TopicResource,
-    AsyncTopicResource,
-    TopicResourceWithRawResponse,
-    AsyncTopicResourceWithRawResponse,
-    TopicResourceWithStreamingResponse,
-    AsyncTopicResourceWithStreamingResponse,
-)
 
 __all__ = [
-    "TopicResource",
-    "AsyncTopicResource",
-    "TopicResourceWithRawResponse",
-    "AsyncTopicResourceWithRawResponse",
-    "TopicResourceWithStreamingResponse",
-    "AsyncTopicResourceWithStreamingResponse",
     "BetaResource",
     "AsyncBetaResource",
     "BetaResourceWithRawResponse",

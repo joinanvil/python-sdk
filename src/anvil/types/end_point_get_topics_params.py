@@ -7,12 +7,10 @@ from typing_extensions import Required, Annotated, TypedDict
 
 from .._utils import PropertyInfo
 
-__all__ = ["BetaCreatePromptMetricsParams"]
+__all__ = ["EndPointGetTopicsParams"]
 
 
-class BetaCreatePromptMetricsParams(TypedDict, total=False):
-    website_topic_id: Required[Annotated[str, PropertyInfo(alias="websiteTopicId")]]
-
+class EndPointGetTopicsParams(TypedDict, total=False):
     from_date: Required[Annotated[int, PropertyInfo(alias="fromDate")]]
 
     llm_provider: Required[Annotated[str, PropertyInfo(alias="llmProvider")]]
@@ -20,3 +18,7 @@ class BetaCreatePromptMetricsParams(TypedDict, total=False):
     tag_ids: Required[Annotated[List[str], PropertyInfo(alias="tagIds")]]
 
     to_date: Required[Annotated[int, PropertyInfo(alias="toDate")]]
+
+    archive: bool
+
+    competitor_url: Annotated[str, PropertyInfo(alias="competitorUrl")]

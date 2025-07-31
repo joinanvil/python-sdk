@@ -1,19 +1,19 @@
 # File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-from .beta import (
-    BetaResource,
-    AsyncBetaResource,
-    BetaResourceWithRawResponse,
-    AsyncBetaResourceWithRawResponse,
-    BetaResourceWithStreamingResponse,
-    AsyncBetaResourceWithStreamingResponse,
+from .end_points import (
+    EndPointsResource,
+    AsyncEndPointsResource,
+    EndPointsResourceWithRawResponse,
+    AsyncEndPointsResourceWithRawResponse,
+    EndPointsResourceWithStreamingResponse,
+    AsyncEndPointsResourceWithStreamingResponse,
 )
 
 __all__ = [
-    "BetaResource",
-    "AsyncBetaResource",
-    "BetaResourceWithRawResponse",
-    "AsyncBetaResourceWithRawResponse",
-    "BetaResourceWithStreamingResponse",
-    "AsyncBetaResourceWithStreamingResponse",
+    "EndPointsResource",
+    "AsyncEndPointsResource",
+    "EndPointsResourceWithRawResponse",
+    "AsyncEndPointsResourceWithRawResponse",
+    "EndPointsResourceWithStreamingResponse",
+    "AsyncEndPointsResourceWithStreamingResponse",
 ]

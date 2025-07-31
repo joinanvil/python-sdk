@@ -21,7 +21,7 @@ from ._types import (
 )
 from ._utils import is_given, get_async_library
 from ._version import __version__
-from .resources import beta
+from .resources import end_points
 from ._streaming import Stream as Stream, AsyncStream as AsyncStream
 from ._exceptions import AnvilError, APIStatusError
 from ._base_client import (
@@ -34,7 +34,7 @@ __all__ = ["Timeout", "Transport", "ProxiesTypes", "RequestOptions", "Anvil", "A
 
 
 class Anvil(SyncAPIClient):
-    beta: beta.BetaResource
+    end_points: end_points.EndPointsResource
     with_raw_response: AnvilWithRawResponse
     with_streaming_response: AnvilWithStreamedResponse
 
@@ -92,7 +92,7 @@ class Anvil(SyncAPIClient):
             _strict_response_validation=_strict_response_validation,
         )
 
-        self.beta = beta.BetaResource(self)
+        self.end_points = end_points.EndPointsResource(self)
         self.with_raw_response = AnvilWithRawResponse(self)
         self.with_streaming_response = AnvilWithStreamedResponse(self)
 
@@ -202,7 +202,7 @@ class Anvil(SyncAPIClient):
 
 
 class AsyncAnvil(AsyncAPIClient):
-    beta: beta.AsyncBetaResource
+    end_points: end_points.AsyncEndPointsResource
     with_raw_response: AsyncAnvilWithRawResponse
     with_streaming_response: AsyncAnvilWithStreamedResponse
 
@@ -260,7 +260,7 @@ class AsyncAnvil(AsyncAPIClient):
             _strict_response_validation=_strict_response_validation,
         )
 
-        self.beta = beta.AsyncBetaResource(self)
+        self.end_points = end_points.AsyncEndPointsResource(self)
         self.with_raw_response = AsyncAnvilWithRawResponse(self)
         self.with_streaming_response = AsyncAnvilWithStreamedResponse(self)
 
@@ -371,22 +371,22 @@ class AsyncAnvil(AsyncAPIClient):
 
 class AnvilWithRawResponse:
     def __init__(self, client: Anvil) -> None:
-        self.beta = beta.BetaResourceWithRawResponse(client.beta)
+        self.end_points = end_points.EndPointsResourceWithRawResponse(client.end_points)
 
 
 class AsyncAnvilWithRawResponse:
     def __init__(self, client: AsyncAnvil) -> None:
-        self.beta = beta.AsyncBetaResourceWithRawResponse(client.beta)
+        self.end_points = end_points.AsyncEndPointsResourceWithRawResponse(client.end_points)
 
 
 class AnvilWithStreamedResponse:
     def __init__(self, client: Anvil) -> None:
-        self.beta = beta.BetaResourceWithStreamingResponse(client.beta)
+        self.end_points = end_points.EndPointsResourceWithStreamingResponse(client.end_points)
 
 
 class AsyncAnvilWithStreamedResponse:
     def __init__(self, client: AsyncAnvil) -> None:
-        self.beta = beta.AsyncBetaResourceWithStreamingResponse(client.beta)
+        self.end_points = end_points.AsyncEndPointsResourceWithStreamingResponse(client.end_points)
 
 
 Client = Anvil

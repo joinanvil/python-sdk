@@ -1,4 +1,4 @@
 configured_endpoints: 4
-openapi_spec_url: https://storage.googleapis.com/stainless-sdk-openapi-specs/anvil%2Fanvil-a97ca4cada465f4c7d9f31477446cb36d14644c62bac7198863e46a0680b7561.yml
-openapi_spec_hash: af888b056f991cc4467c41e08c37016f
-config_hash: 65fb5340e5d7c188e1f0325ebfb459cb
+openapi_spec_url: https://storage.googleapis.com/stainless-sdk-openapi-specs/anvil%2Fanvil-1e5088b1084f472ec883ab91ae965d1a4ae69faaa2a24eb2fda6f2ef16d3cee8.yml
+openapi_spec_hash: f9d6562f9b69c94c773e4b9bd5980b6b
+config_hash: 44a1f4aea854f86adb40d2fb11f3531b

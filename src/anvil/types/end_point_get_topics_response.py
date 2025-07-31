@@ -9,27 +9,27 @@ from pydantic import Field as FieldInfo
 from .._models import BaseModel
 
 __all__ = [
-    "BetaCreateTopicResponse",
-    "BetaCreateTopicResponseItem",
-    "BetaCreateTopicResponseItemAverageRanking",
-    "BetaCreateTopicResponseItemAverageRankingSery",
-    "BetaCreateTopicResponseItemMentionRate",
-    "BetaCreateTopicResponseItemMentionRateSery",
-    "BetaCreateTopicResponseItemShareOfVoice",
-    "BetaCreateTopicResponseItemShareOfVoiceSery",
-    "BetaCreateTopicResponseItemTopic",
-    "BetaCreateTopicResponseItemTopicPrompt",
-    "BetaCreateTopicResponseItemTopicTag",
+    "EndPointGetTopicsResponse",
+    "EndPointGetTopicsResponseItem",
+    "EndPointGetTopicsResponseItemAverageRanking",
+    "EndPointGetTopicsResponseItemAverageRankingSery",
+    "EndPointGetTopicsResponseItemMentionRate",
+    "EndPointGetTopicsResponseItemMentionRateSery",
+    "EndPointGetTopicsResponseItemShareOfVoice",
+    "EndPointGetTopicsResponseItemShareOfVoiceSery",
+    "EndPointGetTopicsResponseItemTopic",
+    "EndPointGetTopicsResponseItemTopicPrompt",
+    "EndPointGetTopicsResponseItemTopicTag",
 ]
 
 
-class BetaCreateTopicResponseItemAverageRankingSery(BaseModel):
+class EndPointGetTopicsResponseItemAverageRankingSery(BaseModel):
     date: datetime
 
     value: float
 
 
-class BetaCreateTopicResponseItemAverageRanking(BaseModel):
+class EndPointGetTopicsResponseItemAverageRanking(BaseModel):
     average: Optional[float] = None
 
     data_format: Optional[Literal["NUMBER", "PERCENTAGE", "CURRENCY", "TEXT", "SCORE"]] = FieldInfo(
@@ -172,20 +172,20 @@ class BetaCreateTopicResponseItemAverageRanking(BaseModel):
 
     metric_name: Optional[str] = FieldInfo(alias="metricName", default=None)
 
-    series: Optional[List[BetaCreateTopicResponseItemAverageRankingSery]] = None
+    series: Optional[List[EndPointGetTopicsResponseItemAverageRankingSery]] = None
 
     to_date: Optional[datetime] = FieldInfo(alias="toDate", default=None)
 
     value: Optional[float] = None
 
 
-class BetaCreateTopicResponseItemMentionRateSery(BaseModel):
+class EndPointGetTopicsResponseItemMentionRateSery(BaseModel):
     date: datetime
 
     value: float
 
 
-class BetaCreateTopicResponseItemMentionRate(BaseModel):
+class EndPointGetTopicsResponseItemMentionRate(BaseModel):
     average: Optional[float] = None
 
     data_format: Optional[Literal["NUMBER", "PERCENTAGE", "CURRENCY", "TEXT", "SCORE"]] = FieldInfo(
@@ -328,20 +328,20 @@ class BetaCreateTopicResponseItemMentionRate(BaseModel):
 
     metric_name: Optional[str] = FieldInfo(alias="metricName", default=None)
 
-    series: Optional[List[BetaCreateTopicResponseItemMentionRateSery]] = None
+    series: Optional[List[EndPointGetTopicsResponseItemMentionRateSery]] = None
 
     to_date: Optional[datetime] = FieldInfo(alias="toDate", default=None)
 
     value: Optional[float] = None
 
 
-class BetaCreateTopicResponseItemShareOfVoiceSery(BaseModel):
+class EndPointGetTopicsResponseItemShareOfVoiceSery(BaseModel):
     date: datetime
 
     value: float
 
 
-class BetaCreateTopicResponseItemShareOfVoice(BaseModel):
+class EndPointGetTopicsResponseItemShareOfVoice(BaseModel):
     average: Optional[float] = None
 
     data_format: Optional[Literal["NUMBER", "PERCENTAGE", "CURRENCY", "TEXT", "SCORE"]] = FieldInfo(
@@ -484,14 +484,14 @@ class BetaCreateTopicResponseItemShareOfVoice(BaseModel):
 
     metric_name: Optional[str] = FieldInfo(alias="metricName", default=None)
 
-    series: Optional[List[BetaCreateTopicResponseItemShareOfVoiceSery]] = None
+    series: Optional[List[EndPointGetTopicsResponseItemShareOfVoiceSery]] = None
 
     to_date: Optional[datetime] = FieldInfo(alias="toDate", default=None)
 
     value: Optional[float] = None
 
 
-class BetaCreateTopicResponseItemTopicPrompt(BaseModel):
+class EndPointGetTopicsResponseItemTopicPrompt(BaseModel):
     id: Optional[str] = None
 
     language: Optional[
@@ -514,7 +514,7 @@ class BetaCreateTopicResponseItemTopicPrompt(BaseModel):
     text: Optional[str] = None
 
 
-class BetaCreateTopicResponseItemTopicTag(BaseModel):
+class EndPointGetTopicsResponseItemTopicTag(BaseModel):
     color_hex: str = FieldInfo(alias="colorHex")
 
     name: str
@@ -526,7 +526,7 @@ class BetaCreateTopicResponseItemTopicTag(BaseModel):
     topic_ids: Optional[List[str]] = FieldInfo(alias="topicIds", default=None)
 
 
-class BetaCreateTopicResponseItemTopic(BaseModel):
+class EndPointGetTopicsResponseItemTopic(BaseModel):
     id: Optional[str] = None
 
     archived: Optional[bool] = None
@@ -657,25 +657,25 @@ class BetaCreateTopicResponseItemTopic(BaseModel):
         ]
     ] = None
 
-    prompts: Optional[List[BetaCreateTopicResponseItemTopicPrompt]] = None
+    prompts: Optional[List[EndPointGetTopicsResponseItemTopicPrompt]] = None
 
     seo_keyword_index: Optional[int] = FieldInfo(alias="seoKeywordIndex", default=None)
 
-    tags: Optional[List[BetaCreateTopicResponseItemTopicTag]] = None
+    tags: Optional[List[EndPointGetTopicsResponseItemTopicTag]] = None
 
     text: Optional[str] = None
 
     website_id: Optional[str] = FieldInfo(alias="websiteId", default=None)
 
 
-class BetaCreateTopicResponseItem(BaseModel):
+class EndPointGetTopicsResponseItem(BaseModel):
     archived: Optional[bool] = None
 
-    average_ranking: Optional[BetaCreateTopicResponseItemAverageRanking] = FieldInfo(
+    average_ranking: Optional[EndPointGetTopicsResponseItemAverageRanking] = FieldInfo(
         alias="averageRanking", default=None
     )
 
-    mention_rate: Optional[BetaCreateTopicResponseItemMentionRate] = FieldInfo(alias="mentionRate", default=None)
+    mention_rate: Optional[EndPointGetTopicsResponseItemMentionRate] = FieldInfo(alias="mentionRate", default=None)
 
     prompts_count: Optional[int] = FieldInfo(alias="promptsCount", default=None)
 
@@ -683,11 +683,11 @@ class BetaCreateTopicResponseItem(BaseModel):
 
     search_volume: Optional[int] = FieldInfo(alias="searchVolume", default=None)
 
-    share_of_voice: Optional[BetaCreateTopicResponseItemShareOfVoice] = FieldInfo(alias="shareOfVoice", default=None)
+    share_of_voice: Optional[EndPointGetTopicsResponseItemShareOfVoice] = FieldInfo(alias="shareOfVoice", default=None)
 
     started: Optional[bool] = None
 
-    topic: Optional[BetaCreateTopicResponseItemTopic] = None
+    topic: Optional[EndPointGetTopicsResponseItemTopic] = None
 
 
-BetaCreateTopicResponse: TypeAlias = List[BetaCreateTopicResponseItem]
+EndPointGetTopicsResponse: TypeAlias = List[EndPointGetTopicsResponseItem]

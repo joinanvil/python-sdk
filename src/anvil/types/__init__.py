@@ -2,10 +2,14 @@
 
 from __future__ import annotations
 
-from .beta_create_topic_params import BetaCreateTopicParams as BetaCreateTopicParams
-from .beta_create_topic_response import BetaCreateTopicResponse as BetaCreateTopicResponse
-from .beta_retrieve_prompt_params import BetaRetrievePromptParams as BetaRetrievePromptParams
-from .beta_retrieve_prompt_response import BetaRetrievePromptResponse as BetaRetrievePromptResponse
-from .beta_retrieve_metadata_response import BetaRetrieveMetadataResponse as BetaRetrieveMetadataResponse
-from .beta_create_prompt_metrics_params import BetaCreatePromptMetricsParams as BetaCreatePromptMetricsParams
-from .beta_create_prompt_metrics_response import BetaCreatePromptMetricsResponse as BetaCreatePromptMetricsResponse
+from .end_point_get_prompt_params import EndPointGetPromptParams as EndPointGetPromptParams
+from .end_point_get_topics_params import EndPointGetTopicsParams as EndPointGetTopicsParams
+from .end_point_get_prompt_response import EndPointGetPromptResponse as EndPointGetPromptResponse
+from .end_point_get_topics_response import EndPointGetTopicsResponse as EndPointGetTopicsResponse
+from .end_point_get_metadata_response import EndPointGetMetadataResponse as EndPointGetMetadataResponse
+from .end_point_get_aggregated_prompts_params import (
+    EndPointGetAggregatedPromptsParams as EndPointGetAggregatedPromptsParams,
+)
+from .end_point_get_aggregated_prompts_response import (
+    EndPointGetAggregatedPromptsResponse as EndPointGetAggregatedPromptsResponse,
+)

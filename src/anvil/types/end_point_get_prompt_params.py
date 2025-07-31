@@ -6,8 +6,8 @@ from typing_extensions import Required, Annotated, TypedDict
 
 from .._utils import PropertyInfo
 
-__all__ = ["BetaRetrievePromptParams"]
+__all__ = ["EndPointGetPromptParams"]
 
 
-class BetaRetrievePromptParams(TypedDict, total=False):
+class EndPointGetPromptParams(TypedDict, total=False):
     prompt_id: Required[Annotated[str, PropertyInfo(alias="promptId")]]

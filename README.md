@@ -32,7 +32,7 @@ client = Anvil(
     api_key=os.environ.get("ANVIL_API_KEY"),  # This is the default and can be omitted
 )
 
-response = client.beta.create_topic(
+response = client.end_points.get_topics(
     from_date=0,
     llm_provider="llmProvider",
     tag_ids=["string"],
@@ -60,7 +60,7 @@ client = AsyncAnvil(
 
 
 async def main() -> None:
-    response = await client.beta.create_topic(
+    response = await client.end_points.get_topics(
         from_date=0,
         llm_provider="llmProvider",
         tag_ids=["string"],
@@ -97,7 +97,7 @@ async def main() -> None:
         api_key="My API Key",
         http_client=DefaultAioHttpClient(),
     ) as client:
-        response = await client.beta.create_topic(
+        response = await client.end_points.get_topics(
             from_date=0,
             llm_provider="llmProvider",
             tag_ids=["string"],
@@ -133,7 +133,7 @@ from anvil import Anvil
 client = Anvil()
 
 try:
-    client.beta.create_topic(
+    client.end_points.get_topics(
         from_date=0,
         llm_provider="llmProvider",
         tag_ids=["string"],
@@ -181,7 +181,7 @@ client = Anvil(
 )
 
 # Or, configure per-request:
-client.with_options(max_retries=5).beta.create_topic(
+client.with_options(max_retries=5).end_points.get_topics(
     from_date=0,
     llm_provider="llmProvider",
     tag_ids=["string"],
@@ -209,7 +209,7 @@ client = Anvil(
 )
 
 # Override per-request:
-client.with_options(timeout=5.0).beta.create_topic(
+client.with_options(timeout=5.0).end_points.get_topics(
     from_date=0,
     llm_provider="llmProvider",
     tag_ids=["string"],
@@ -255,7 +255,7 @@ The "raw" Response object can be accessed by prefixing `.with_raw_response.` to 
 from anvil import Anvil
 
 client = Anvil()
-response = client.beta.with_raw_response.create_topic(
+response = client.end_points.with_raw_response.get_topics(
     from_date=0,
     llm_provider="llmProvider",
     tag_ids=["string"],
@@ -263,8 +263,8 @@ response = client.beta.with_raw_response.create_topic(
 )
 print(response.headers.get('X-My-Header'))
 
-beta = response.parse()  # get the object that `beta.create_topic()` would have returned
-print(beta)
+end_point = response.parse()  # get the object that `end_points.get_topics()` would have returned
+print(end_point)
 ```
 
 These methods return an [`APIResponse`](https://github.com/joinanvil/python-sdk/tree/main/src/anvil/_response.py) object.
@@ -278,7 +278,7 @@ The above interface eagerly reads the full response body when you make the reque
 To stream the response body, use `.with_streaming_response` instead, which requires a context manager and only reads the response body once you call `.read()`, `.text()`, `.json()`, `.iter_bytes()`, `.iter_text()`, `.iter_lines()` or `.parse()`. In the async client, these are async methods.
 
 ```python
-with client.beta.with_streaming_response.create_topic(
+with client.end_points.with_streaming_response.get_topics(
     from_date=0,
     llm_provider="llmProvider",
     tag_ids=["string"],

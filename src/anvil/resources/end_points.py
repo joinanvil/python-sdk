@@ -6,7 +6,7 @@ from typing import List
 
 import httpx
 
-from ..types import beta_create_topic_params, beta_retrieve_prompt_params, beta_create_prompt_metrics_params
+from ..types import end_point_get_prompt_params, end_point_get_topics_params, end_point_get_aggregated_prompts_params
 from .._types import NOT_GIVEN, Body, Query, Headers, NotGiven
 from .._utils import maybe_transform, async_maybe_transform
 from .._compat import cached_property
@@ -18,35 +18,35 @@ from .._response import (
     async_to_streamed_response_wrapper,
 )
 from .._base_client import make_request_options
-from ..types.beta_create_topic_response import BetaCreateTopicResponse
-from ..types.beta_retrieve_prompt_response import BetaRetrievePromptResponse
-from ..types.beta_retrieve_metadata_response import BetaRetrieveMetadataResponse
-from ..types.beta_create_prompt_metrics_response import BetaCreatePromptMetricsResponse
+from ..types.end_point_get_prompt_response import EndPointGetPromptResponse
+from ..types.end_point_get_topics_response import EndPointGetTopicsResponse
+from ..types.end_point_get_metadata_response import EndPointGetMetadataResponse
+from ..types.end_point_get_aggregated_prompts_response import EndPointGetAggregatedPromptsResponse
 
-__all__ = ["BetaResource", "AsyncBetaResource"]
+__all__ = ["EndPointsResource", "AsyncEndPointsResource"]
 
 
-class BetaResource(SyncAPIResource):
+class EndPointsResource(SyncAPIResource):
     @cached_property
-    def with_raw_response(self) -> BetaResourceWithRawResponse:
+    def with_raw_response(self) -> EndPointsResourceWithRawResponse:
         """
         This property can be used as a prefix for any HTTP method call to return
         the raw response object instead of the parsed content.
 
         For more information, see https://www.github.com/joinanvil/python-sdk#accessing-raw-response-data-eg-headers
         """
-        return BetaResourceWithRawResponse(self)
+        return EndPointsResourceWithRawResponse(self)
 
     @cached_property
-    def with_streaming_response(self) -> BetaResourceWithStreamingResponse:
+    def with_streaming_response(self) -> EndPointsResourceWithStreamingResponse:
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
         For more information, see https://www.github.com/joinanvil/python-sdk#with_streaming_response
         """
-        return BetaResourceWithStreamingResponse(self)
+        return EndPointsResourceWithStreamingResponse(self)
 
-    def create_prompt_metrics(
+    def get_aggregated_prompts(
         self,
         *,
         website_topic_id: str,
@@ -60,7 +60,7 @@ class BetaResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> BetaCreatePromptMetricsResponse:
+    ) -> EndPointGetAggregatedPromptsResponse:
         """
         Returns metrics for all prompts with frequency over time topic ID
 
@@ -82,7 +82,7 @@ class BetaResource(SyncAPIResource):
                     "tag_ids": tag_ids,
                     "to_date": to_date,
                 },
-                beta_create_prompt_metrics_params.BetaCreatePromptMetricsParams,
+                end_point_get_aggregated_prompts_params.EndPointGetAggregatedPromptsParams,
             ),
             options=make_request_options(
                 extra_headers=extra_headers,
@@ -91,13 +91,67 @@ class BetaResource(SyncAPIResource):
                 timeout=timeout,
                 query=maybe_transform(
                     {"website_topic_id": website_topic_id},
-                    beta_create_prompt_metrics_params.BetaCreatePromptMetricsParams,
+                    end_point_get_aggregated_prompts_params.EndPointGetAggregatedPromptsParams,
                 ),
             ),
-            cast_to=BetaCreatePromptMetricsResponse,
+            cast_to=EndPointGetAggregatedPromptsResponse,
         )
 
-    def create_topic(
+    def get_metadata(
+        self,
+        *,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+    ) -> EndPointGetMetadataResponse:
+        """Returns all metadata by website ID"""
+        return self._get(
+            "/api/beta/metadata",
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=EndPointGetMetadataResponse,
+        )
+
+    def get_prompt(
+        self,
+        *,
+        prompt_id: str,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+    ) -> EndPointGetPromptResponse:
+        """
+        Returns all related metrics data by prompt ID
+
+        Args:
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        return self._get(
+            "/api/beta/prompts",
+            options=make_request_options(
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                query=maybe_transform({"prompt_id": prompt_id}, end_point_get_prompt_params.EndPointGetPromptParams),
+            ),
+            cast_to=EndPointGetPromptResponse,
+        )
+
+    def get_topics(
         self,
         *,
         from_date: int,
@@ -112,7 +166,7 @@ class BetaResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> BetaCreateTopicResponse:
+    ) -> EndPointGetTopicsResponse:
         """
         Returns metrics for all the topics by website ID
 
@@ -136,90 +190,36 @@ class BetaResource(SyncAPIResource):
                     "archive": archive,
                     "competitor_url": competitor_url,
                 },
-                beta_create_topic_params.BetaCreateTopicParams,
+                end_point_get_topics_params.EndPointGetTopicsParams,
             ),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=BetaCreateTopicResponse,
-        )
-
-    def retrieve_metadata(
-        self,
-        *,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> BetaRetrieveMetadataResponse:
-        """Returns all metadata by website ID"""
-        return self._get(
-            "/api/beta/metadata",
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
-            cast_to=BetaRetrieveMetadataResponse,
-        )
-
-    def retrieve_prompt(
-        self,
-        *,
-        prompt_id: str,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> BetaRetrievePromptResponse:
-        """
-        Returns all related metrics data by prompt ID
-
-        Args:
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        return self._get(
-            "/api/beta/prompt",
-            options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                query=maybe_transform({"prompt_id": prompt_id}, beta_retrieve_prompt_params.BetaRetrievePromptParams),
-            ),
-            cast_to=BetaRetrievePromptResponse,
+            cast_to=EndPointGetTopicsResponse,
         )
 
 
-class AsyncBetaResource(AsyncAPIResource):
+class AsyncEndPointsResource(AsyncAPIResource):
     @cached_property
-    def with_raw_response(self) -> AsyncBetaResourceWithRawResponse:
+    def with_raw_response(self) -> AsyncEndPointsResourceWithRawResponse:
         """
         This property can be used as a prefix for any HTTP method call to return
         the raw response object instead of the parsed content.
 
         For more information, see https://www.github.com/joinanvil/python-sdk#accessing-raw-response-data-eg-headers
         """
-        return AsyncBetaResourceWithRawResponse(self)
+        return AsyncEndPointsResourceWithRawResponse(self)
 
     @cached_property
-    def with_streaming_response(self) -> AsyncBetaResourceWithStreamingResponse:
+    def with_streaming_response(self) -> AsyncEndPointsResourceWithStreamingResponse:
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
         For more information, see https://www.github.com/joinanvil/python-sdk#with_streaming_response
         """
-        return AsyncBetaResourceWithStreamingResponse(self)
+        return AsyncEndPointsResourceWithStreamingResponse(self)
 
-    async def create_prompt_metrics(
+    async def get_aggregated_prompts(
         self,
         *,
         website_topic_id: str,
@@ -233,7 +233,7 @@ class AsyncBetaResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> BetaCreatePromptMetricsResponse:
+    ) -> EndPointGetAggregatedPromptsResponse:
         """
         Returns metrics for all prompts with frequency over time topic ID
 
@@ -255,7 +255,7 @@ class AsyncBetaResource(AsyncAPIResource):
                     "tag_ids": tag_ids,
                     "to_date": to_date,
                 },
-                beta_create_prompt_metrics_params.BetaCreatePromptMetricsParams,
+                end_point_get_aggregated_prompts_params.EndPointGetAggregatedPromptsParams,
             ),
             options=make_request_options(
                 extra_headers=extra_headers,
@@ -264,13 +264,69 @@ class AsyncBetaResource(AsyncAPIResource):
                 timeout=timeout,
                 query=await async_maybe_transform(
                     {"website_topic_id": website_topic_id},
-                    beta_create_prompt_metrics_params.BetaCreatePromptMetricsParams,
+                    end_point_get_aggregated_prompts_params.EndPointGetAggregatedPromptsParams,
                 ),
             ),
-            cast_to=BetaCreatePromptMetricsResponse,
+            cast_to=EndPointGetAggregatedPromptsResponse,
         )
 
-    async def create_topic(
+    async def get_metadata(
+        self,
+        *,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+    ) -> EndPointGetMetadataResponse:
+        """Returns all metadata by website ID"""
+        return await self._get(
+            "/api/beta/metadata",
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=EndPointGetMetadataResponse,
+        )
+
+    async def get_prompt(
+        self,
+        *,
+        prompt_id: str,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+    ) -> EndPointGetPromptResponse:
+        """
+        Returns all related metrics data by prompt ID
+
+        Args:
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        return await self._get(
+            "/api/beta/prompts",
+            options=make_request_options(
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                query=await async_maybe_transform(
+                    {"prompt_id": prompt_id}, end_point_get_prompt_params.EndPointGetPromptParams
+                ),
+            ),
+            cast_to=EndPointGetPromptResponse,
+        )
+
+    async def get_topics(
         self,
         *,
         from_date: int,
@@ -285,7 +341,7 @@ class AsyncBetaResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> BetaCreateTopicResponse:
+    ) -> EndPointGetTopicsResponse:
         """
         Returns metrics for all the topics by website ID
 
@@ -309,138 +365,82 @@ class AsyncBetaResource(AsyncAPIResource):
                     "archive": archive,
                     "competitor_url": competitor_url,
                 },
-                beta_create_topic_params.BetaCreateTopicParams,
+                end_point_get_topics_params.EndPointGetTopicsParams,
             ),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=BetaCreateTopicResponse,
-        )
-
-    async def retrieve_metadata(
-        self,
-        *,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> BetaRetrieveMetadataResponse:
-        """Returns all metadata by website ID"""
-        return await self._get(
-            "/api/beta/metadata",
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
-            cast_to=BetaRetrieveMetadataResponse,
-        )
-
-    async def retrieve_prompt(
-        self,
-        *,
-        prompt_id: str,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> BetaRetrievePromptResponse:
-        """
-        Returns all related metrics data by prompt ID
-
-        Args:
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        return await self._get(
-            "/api/beta/prompt",
-            options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                query=await async_maybe_transform(
-                    {"prompt_id": prompt_id}, beta_retrieve_prompt_params.BetaRetrievePromptParams
-                ),
-            ),
-            cast_to=BetaRetrievePromptResponse,
+            cast_to=EndPointGetTopicsResponse,
         )
 
 
-class BetaResourceWithRawResponse:
-    def __init__(self, beta: BetaResource) -> None:
-        self._beta = beta
+class EndPointsResourceWithRawResponse:
+    def __init__(self, end_points: EndPointsResource) -> None:
+        self._end_points = end_points
 
-        self.create_prompt_metrics = to_raw_response_wrapper(
-            beta.create_prompt_metrics,
+        self.get_aggregated_prompts = to_raw_response_wrapper(
+            end_points.get_aggregated_prompts,
         )
-        self.create_topic = to_raw_response_wrapper(
-            beta.create_topic,
+        self.get_metadata = to_raw_response_wrapper(
+            end_points.get_metadata,
         )
-        self.retrieve_metadata = to_raw_response_wrapper(
-            beta.retrieve_metadata,
+        self.get_prompt = to_raw_response_wrapper(
+            end_points.get_prompt,
         )
-        self.retrieve_prompt = to_raw_response_wrapper(
-            beta.retrieve_prompt,
-        )
-
-
-class AsyncBetaResourceWithRawResponse:
-    def __init__(self, beta: AsyncBetaResource) -> None:
-        self._beta = beta
-
-        self.create_prompt_metrics = async_to_raw_response_wrapper(
-            beta.create_prompt_metrics,
-        )
-        self.create_topic = async_to_raw_response_wrapper(
-            beta.create_topic,
-        )
-        self.retrieve_metadata = async_to_raw_response_wrapper(
-            beta.retrieve_metadata,
-        )
-        self.retrieve_prompt = async_to_raw_response_wrapper(
-            beta.retrieve_prompt,
+        self.get_topics = to_raw_response_wrapper(
+            end_points.get_topics,
         )
 
 
-class BetaResourceWithStreamingResponse:
-    def __init__(self, beta: BetaResource) -> None:
-        self._beta = beta
+class AsyncEndPointsResourceWithRawResponse:
+    def __init__(self, end_points: AsyncEndPointsResource) -> None:
+        self._end_points = end_points
 
-        self.create_prompt_metrics = to_streamed_response_wrapper(
-            beta.create_prompt_metrics,
+        self.get_aggregated_prompts = async_to_raw_response_wrapper(
+            end_points.get_aggregated_prompts,
         )
-        self.create_topic = to_streamed_response_wrapper(
-            beta.create_topic,
+        self.get_metadata = async_to_raw_response_wrapper(
+            end_points.get_metadata,
         )
-        self.retrieve_metadata = to_streamed_response_wrapper(
-            beta.retrieve_metadata,
+        self.get_prompt = async_to_raw_response_wrapper(
+            end_points.get_prompt,
         )
-        self.retrieve_prompt = to_streamed_response_wrapper(
-            beta.retrieve_prompt,
+        self.get_topics = async_to_raw_response_wrapper(
+            end_points.get_topics,
         )
 
 
-class AsyncBetaResourceWithStreamingResponse:
-    def __init__(self, beta: AsyncBetaResource) -> None:
-        self._beta = beta
+class EndPointsResourceWithStreamingResponse:
+    def __init__(self, end_points: EndPointsResource) -> None:
+        self._end_points = end_points
 
-        self.create_prompt_metrics = async_to_streamed_response_wrapper(
-            beta.create_prompt_metrics,
+        self.get_aggregated_prompts = to_streamed_response_wrapper(
+            end_points.get_aggregated_prompts,
         )
-        self.create_topic = async_to_streamed_response_wrapper(
-            beta.create_topic,
+        self.get_metadata = to_streamed_response_wrapper(
+            end_points.get_metadata,
         )
-        self.retrieve_metadata = async_to_streamed_response_wrapper(
-            beta.retrieve_metadata,
+        self.get_prompt = to_streamed_response_wrapper(
+            end_points.get_prompt,
         )
-        self.retrieve_prompt = async_to_streamed_response_wrapper(
-            beta.retrieve_prompt,
+        self.get_topics = to_streamed_response_wrapper(
+            end_points.get_topics,
+        )
+
+
+class AsyncEndPointsResourceWithStreamingResponse:
+    def __init__(self, end_points: AsyncEndPointsResource) -> None:
+        self._end_points = end_points
+
+        self.get_aggregated_prompts = async_to_streamed_response_wrapper(
+            end_points.get_aggregated_prompts,
+        )
+        self.get_metadata = async_to_streamed_response_wrapper(
+            end_points.get_metadata,
+        )
+        self.get_prompt = async_to_streamed_response_wrapper(
+            end_points.get_prompt,
+        )
+        self.get_topics = async_to_streamed_response_wrapper(
+            end_points.get_topics,
         )

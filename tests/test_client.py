@@ -715,7 +715,7 @@ class TestAnvil:
         respx_mock.post("/api/beta/topics").mock(side_effect=httpx.TimeoutException("Test timeout error"))
 
         with pytest.raises(APITimeoutError):
-            client.beta.with_streaming_response.create_topic(
+            client.end_points.with_streaming_response.get_topics(
                 from_date=0, llm_provider="llmProvider", tag_ids=["string"], to_date=0
             ).__enter__()
 
@@ -727,7 +727,7 @@ class TestAnvil:
         respx_mock.post("/api/beta/topics").mock(return_value=httpx.Response(500))
 
         with pytest.raises(APIStatusError):
-            client.beta.with_streaming_response.create_topic(
+            client.end_points.with_streaming_response.get_topics(
                 from_date=0, llm_provider="llmProvider", tag_ids=["string"], to_date=0
             ).__enter__()
         assert _get_open_connections(self.client) == 0
@@ -758,7 +758,7 @@ class TestAnvil:
 
         respx_mock.post("/api/beta/topics").mock(side_effect=retry_handler)
 
-        response = client.beta.with_raw_response.create_topic(
+        response = client.end_points.with_raw_response.get_topics(
             from_date=0, llm_provider="llmProvider", tag_ids=["string"], to_date=0
         )
 
@@ -782,7 +782,7 @@ class TestAnvil:
 
         respx_mock.post("/api/beta/topics").mock(side_effect=retry_handler)
 
-        response = client.beta.with_raw_response.create_topic(
+        response = client.end_points.with_raw_response.get_topics(
             from_date=0,
             llm_provider="llmProvider",
             tag_ids=["string"],
@@ -811,7 +811,7 @@ class TestAnvil:
 
         respx_mock.post("/api/beta/topics").mock(side_effect=retry_handler)
 
-        response = client.beta.with_raw_response.create_topic(
+        response = client.end_points.with_raw_response.get_topics(
             from_date=0,
             llm_provider="llmProvider",
             tag_ids=["string"],
@@ -1544,7 +1544,7 @@ class TestAsyncAnvil:
         respx_mock.post("/api/beta/topics").mock(side_effect=httpx.TimeoutException("Test timeout error"))
 
         with pytest.raises(APITimeoutError):
-            await async_client.beta.with_streaming_response.create_topic(
+            await async_client.end_points.with_streaming_response.get_topics(
                 from_date=0, llm_provider="llmProvider", tag_ids=["string"], to_date=0
             ).__aenter__()
 
@@ -1556,7 +1556,7 @@ class TestAsyncAnvil:
         respx_mock.post("/api/beta/topics").mock(return_value=httpx.Response(500))
 
         with pytest.raises(APIStatusError):
-            await async_client.beta.with_streaming_response.create_topic(
+            await async_client.end_points.with_streaming_response.get_topics(
                 from_date=0, llm_provider="llmProvider", tag_ids=["string"], to_date=0
             ).__aenter__()
         assert _get_open_connections(self.client) == 0
@@ -1588,7 +1588,7 @@ class TestAsyncAnvil:
 
         respx_mock.post("/api/beta/topics").mock(side_effect=retry_handler)
 
-        response = await client.beta.with_raw_response.create_topic(
+        response = await client.end_points.with_raw_response.get_topics(
             from_date=0, llm_provider="llmProvider", tag_ids=["string"], to_date=0
         )
 
@@ -1615,7 +1615,7 @@ class TestAsyncAnvil:
 
         respx_mock.post("/api/beta/topics").mock(side_effect=retry_handler)
 
-        response = await client.beta.with_raw_response.create_topic(
+        response = await client.end_points.with_raw_response.get_topics(
             from_date=0,
             llm_provider="llmProvider",
             tag_ids=["string"],
@@ -1645,7 +1645,7 @@ class TestAsyncAnvil:
 
         respx_mock.post("/api/beta/topics").mock(side_effect=retry_handler)
 
-        response = await client.beta.with_raw_response.create_topic(
+        response = await client.end_points.with_raw_response.get_topics(
             from_date=0,
             llm_provider="llmProvider",
             tag_ids=["string"],

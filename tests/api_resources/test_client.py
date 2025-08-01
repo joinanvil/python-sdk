@@ -9,35 +9,35 @@ import pytest
 
 from anvil import Anvil, AsyncAnvil
 from anvil.types import (
-    EndPointGetPromptResponse,
-    EndPointGetTopicsResponse,
-    EndPointGetMetadataResponse,
-    EndPointGetAggregatedPromptsResponse,
+    GetPromptResponse,
+    GetTopicsResponse,
+    GetMetadataResponse,
+    GetAggregatedPromptsResponse,
 )
 from tests.utils import assert_matches_type
 
 base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
 
 
-class TestEndPoints:
+class TestClient:
     parametrize = pytest.mark.parametrize("client", [False, True], indirect=True, ids=["loose", "strict"])
 
     @pytest.mark.skip()
     @parametrize
     def test_method_get_aggregated_prompts(self, client: Anvil) -> None:
-        end_point = client.end_points.get_aggregated_prompts(
+        client_ = client.get_aggregated_prompts(
             website_topic_id="websiteTopicId",
             from_date=0,
             llm_provider="llmProvider",
             tag_ids=["string"],
             to_date=0,
         )
-        assert_matches_type(EndPointGetAggregatedPromptsResponse, end_point, path=["response"])
+        assert_matches_type(GetAggregatedPromptsResponse, client_, path=["response"])
 
     @pytest.mark.skip()
     @parametrize
     def test_raw_response_get_aggregated_prompts(self, client: Anvil) -> None:
-        response = client.end_points.with_raw_response.get_aggregated_prompts(
+        response = client.with_raw_response.get_aggregated_prompts(
             website_topic_id="websiteTopicId",
             from_date=0,
             llm_provider="llmProvider",
@@ -47,13 +47,13 @@ class TestEndPoints:
 
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-        end_point = response.parse()
-        assert_matches_type(EndPointGetAggregatedPromptsResponse, end_point, path=["response"])
+        client_ = response.parse()
+        assert_matches_type(GetAggregatedPromptsResponse, client_, path=["response"])
 
     @pytest.mark.skip()
     @parametrize
     def test_streaming_response_get_aggregated_prompts(self, client: Anvil) -> None:
-        with client.end_points.with_streaming_response.get_aggregated_prompts(
+        with client.with_streaming_response.get_aggregated_prompts(
             website_topic_id="websiteTopicId",
             from_date=0,
             llm_provider="llmProvider",
@@ -63,88 +63,88 @@ class TestEndPoints:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
-            end_point = response.parse()
-            assert_matches_type(EndPointGetAggregatedPromptsResponse, end_point, path=["response"])
+            client_ = response.parse()
+            assert_matches_type(GetAggregatedPromptsResponse, client_, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
     @pytest.mark.skip()
     @parametrize
     def test_method_get_metadata(self, client: Anvil) -> None:
-        end_point = client.end_points.get_metadata()
-        assert_matches_type(EndPointGetMetadataResponse, end_point, path=["response"])
+        client_ = client.get_metadata()
+        assert_matches_type(GetMetadataResponse, client_, path=["response"])
 
     @pytest.mark.skip()
     @parametrize
     def test_raw_response_get_metadata(self, client: Anvil) -> None:
-        response = client.end_points.with_raw_response.get_metadata()
+        response = client.with_raw_response.get_metadata()
 
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-        end_point = response.parse()
-        assert_matches_type(EndPointGetMetadataResponse, end_point, path=["response"])
+        client_ = response.parse()
+        assert_matches_type(GetMetadataResponse, client_, path=["response"])
 
     @pytest.mark.skip()
     @parametrize
     def test_streaming_response_get_metadata(self, client: Anvil) -> None:
-        with client.end_points.with_streaming_response.get_metadata() as response:
+        with client.with_streaming_response.get_metadata() as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
-            end_point = response.parse()
-            assert_matches_type(EndPointGetMetadataResponse, end_point, path=["response"])
+            client_ = response.parse()
+            assert_matches_type(GetMetadataResponse, client_, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
     @pytest.mark.skip()
     @parametrize
     def test_method_get_prompt(self, client: Anvil) -> None:
-        end_point = client.end_points.get_prompt(
+        client_ = client.get_prompt(
             prompt_id="promptId",
         )
-        assert_matches_type(EndPointGetPromptResponse, end_point, path=["response"])
+        assert_matches_type(GetPromptResponse, client_, path=["response"])
 
     @pytest.mark.skip()
     @parametrize
     def test_raw_response_get_prompt(self, client: Anvil) -> None:
-        response = client.end_points.with_raw_response.get_prompt(
+        response = client.with_raw_response.get_prompt(
             prompt_id="promptId",
         )
 
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-        end_point = response.parse()
-        assert_matches_type(EndPointGetPromptResponse, end_point, path=["response"])
+        client_ = response.parse()
+        assert_matches_type(GetPromptResponse, client_, path=["response"])
 
     @pytest.mark.skip()
     @parametrize
     def test_streaming_response_get_prompt(self, client: Anvil) -> None:
-        with client.end_points.with_streaming_response.get_prompt(
+        with client.with_streaming_response.get_prompt(
             prompt_id="promptId",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
-            end_point = response.parse()
-            assert_matches_type(EndPointGetPromptResponse, end_point, path=["response"])
+            client_ = response.parse()
+            assert_matches_type(GetPromptResponse, client_, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
     @pytest.mark.skip()
     @parametrize
     def test_method_get_topics(self, client: Anvil) -> None:
-        end_point = client.end_points.get_topics(
+        client_ = client.get_topics(
             from_date=0,
             llm_provider="llmProvider",
             tag_ids=["string"],
             to_date=0,
         )
-        assert_matches_type(EndPointGetTopicsResponse, end_point, path=["response"])
+        assert_matches_type(GetTopicsResponse, client_, path=["response"])
 
     @pytest.mark.skip()
     @parametrize
     def test_method_get_topics_with_all_params(self, client: Anvil) -> None:
-        end_point = client.end_points.get_topics(
+        client_ = client.get_topics(
             from_date=0,
             llm_provider="llmProvider",
             tag_ids=["string"],
@@ -152,12 +152,12 @@ class TestEndPoints:
             archive=True,
             competitor_url="competitorUrl",
         )
-        assert_matches_type(EndPointGetTopicsResponse, end_point, path=["response"])
+        assert_matches_type(GetTopicsResponse, client_, path=["response"])
 
     @pytest.mark.skip()
     @parametrize
     def test_raw_response_get_topics(self, client: Anvil) -> None:
-        response = client.end_points.with_raw_response.get_topics(
+        response = client.with_raw_response.get_topics(
             from_date=0,
             llm_provider="llmProvider",
             tag_ids=["string"],
@@ -166,13 +166,13 @@ class TestEndPoints:
 
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-        end_point = response.parse()
-        assert_matches_type(EndPointGetTopicsResponse, end_point, path=["response"])
+        client_ = response.parse()
+        assert_matches_type(GetTopicsResponse, client_, path=["response"])
 
     @pytest.mark.skip()
     @parametrize
     def test_streaming_response_get_topics(self, client: Anvil) -> None:
-        with client.end_points.with_streaming_response.get_topics(
+        with client.with_streaming_response.get_topics(
             from_date=0,
             llm_provider="llmProvider",
             tag_ids=["string"],
@@ -181,13 +181,13 @@ class TestEndPoints:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
-            end_point = response.parse()
-            assert_matches_type(EndPointGetTopicsResponse, end_point, path=["response"])
+            client_ = response.parse()
+            assert_matches_type(GetTopicsResponse, client_, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
 
-class TestAsyncEndPoints:
+class TestAsyncClient:
     parametrize = pytest.mark.parametrize(
         "async_client", [False, True, {"http_client": "aiohttp"}], indirect=True, ids=["loose", "strict", "aiohttp"]
     )
@@ -195,19 +195,19 @@ class TestAsyncEndPoints:
     @pytest.mark.skip()
     @parametrize
     async def test_method_get_aggregated_prompts(self, async_client: AsyncAnvil) -> None:
-        end_point = await async_client.end_points.get_aggregated_prompts(
+        client = await async_client.get_aggregated_prompts(
             website_topic_id="websiteTopicId",
             from_date=0,
             llm_provider="llmProvider",
             tag_ids=["string"],
             to_date=0,
         )
-        assert_matches_type(EndPointGetAggregatedPromptsResponse, end_point, path=["response"])
+        assert_matches_type(GetAggregatedPromptsResponse, client, path=["response"])
 
     @pytest.mark.skip()
     @parametrize
     async def test_raw_response_get_aggregated_prompts(self, async_client: AsyncAnvil) -> None:
-        response = await async_client.end_points.with_raw_response.get_aggregated_prompts(
+        response = await async_client.with_raw_response.get_aggregated_prompts(
             website_topic_id="websiteTopicId",
             from_date=0,
             llm_provider="llmProvider",
@@ -217,13 +217,13 @@ class TestAsyncEndPoints:
 
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-        end_point = await response.parse()
-        assert_matches_type(EndPointGetAggregatedPromptsResponse, end_point, path=["response"])
+        client = await response.parse()
+        assert_matches_type(GetAggregatedPromptsResponse, client, path=["response"])
 
     @pytest.mark.skip()
     @parametrize
     async def test_streaming_response_get_aggregated_prompts(self, async_client: AsyncAnvil) -> None:
-        async with async_client.end_points.with_streaming_response.get_aggregated_prompts(
+        async with async_client.with_streaming_response.get_aggregated_prompts(
             website_topic_id="websiteTopicId",
             from_date=0,
             llm_provider="llmProvider",
@@ -233,88 +233,88 @@ class TestAsyncEndPoints:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
-            end_point = await response.parse()
-            assert_matches_type(EndPointGetAggregatedPromptsResponse, end_point, path=["response"])
+            client = await response.parse()
+            assert_matches_type(GetAggregatedPromptsResponse, client, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
     @pytest.mark.skip()
     @parametrize
     async def test_method_get_metadata(self, async_client: AsyncAnvil) -> None:
-        end_point = await async_client.end_points.get_metadata()
-        assert_matches_type(EndPointGetMetadataResponse, end_point, path=["response"])
+        client = await async_client.get_metadata()
+        assert_matches_type(GetMetadataResponse, client, path=["response"])
 
     @pytest.mark.skip()
     @parametrize
     async def test_raw_response_get_metadata(self, async_client: AsyncAnvil) -> None:
-        response = await async_client.end_points.with_raw_response.get_metadata()
+        response = await async_client.with_raw_response.get_metadata()
 
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-        end_point = await response.parse()
-        assert_matches_type(EndPointGetMetadataResponse, end_point, path=["response"])
+        client = await response.parse()
+        assert_matches_type(GetMetadataResponse, client, path=["response"])
 
     @pytest.mark.skip()
     @parametrize
     async def test_streaming_response_get_metadata(self, async_client: AsyncAnvil) -> None:
-        async with async_client.end_points.with_streaming_response.get_metadata() as response:
+        async with async_client.with_streaming_response.get_metadata() as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
-            end_point = await response.parse()
-            assert_matches_type(EndPointGetMetadataResponse, end_point, path=["response"])
+            client = await response.parse()
+            assert_matches_type(GetMetadataResponse, client, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
     @pytest.mark.skip()
     @parametrize
     async def test_method_get_prompt(self, async_client: AsyncAnvil) -> None:
-        end_point = await async_client.end_points.get_prompt(
+        client = await async_client.get_prompt(
             prompt_id="promptId",
         )
-        assert_matches_type(EndPointGetPromptResponse, end_point, path=["response"])
+        assert_matches_type(GetPromptResponse, client, path=["response"])
 
     @pytest.mark.skip()
     @parametrize
     async def test_raw_response_get_prompt(self, async_client: AsyncAnvil) -> None:
-        response = await async_client.end_points.with_raw_response.get_prompt(
+        response = await async_client.with_raw_response.get_prompt(
             prompt_id="promptId",
         )
 
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-        end_point = await response.parse()
-        assert_matches_type(EndPointGetPromptResponse, end_point, path=["response"])
+        client = await response.parse()
+        assert_matches_type(GetPromptResponse, client, path=["response"])
 
     @pytest.mark.skip()
     @parametrize
     async def test_streaming_response_get_prompt(self, async_client: AsyncAnvil) -> None:
-        async with async_client.end_points.with_streaming_response.get_prompt(
+        async with async_client.with_streaming_response.get_prompt(
             prompt_id="promptId",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
-            end_point = await response.parse()
-            assert_matches_type(EndPointGetPromptResponse, end_point, path=["response"])
+            client = await response.parse()
+            assert_matches_type(GetPromptResponse, client, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
     @pytest.mark.skip()
     @parametrize
     async def test_method_get_topics(self, async_client: AsyncAnvil) -> None:
-        end_point = await async_client.end_points.get_topics(
+        client = await async_client.get_topics(
             from_date=0,
             llm_provider="llmProvider",
             tag_ids=["string"],
             to_date=0,
         )
-        assert_matches_type(EndPointGetTopicsResponse, end_point, path=["response"])
+        assert_matches_type(GetTopicsResponse, client, path=["response"])
 
     @pytest.mark.skip()
     @parametrize
     async def test_method_get_topics_with_all_params(self, async_client: AsyncAnvil) -> None:
-        end_point = await async_client.end_points.get_topics(
+        client = await async_client.get_topics(
             from_date=0,
             llm_provider="llmProvider",
             tag_ids=["string"],
@@ -322,12 +322,12 @@ class TestAsyncEndPoints:
             archive=True,
             competitor_url="competitorUrl",
         )
-        assert_matches_type(EndPointGetTopicsResponse, end_point, path=["response"])
+        assert_matches_type(GetTopicsResponse, client, path=["response"])
 
     @pytest.mark.skip()
     @parametrize
     async def test_raw_response_get_topics(self, async_client: AsyncAnvil) -> None:
-        response = await async_client.end_points.with_raw_response.get_topics(
+        response = await async_client.with_raw_response.get_topics(
             from_date=0,
             llm_provider="llmProvider",
             tag_ids=["string"],
@@ -336,13 +336,13 @@ class TestAsyncEndPoints:
 
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-        end_point = await response.parse()
-        assert_matches_type(EndPointGetTopicsResponse, end_point, path=["response"])
+        client = await response.parse()
+        assert_matches_type(GetTopicsResponse, client, path=["response"])
 
     @pytest.mark.skip()
     @parametrize
     async def test_streaming_response_get_topics(self, async_client: AsyncAnvil) -> None:
-        async with async_client.end_points.with_streaming_response.get_topics(
+        async with async_client.with_streaming_response.get_topics(
             from_date=0,
             llm_provider="llmProvider",
             tag_ids=["string"],
@@ -351,7 +351,7 @@ class TestAsyncEndPoints:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
-            end_point = await response.parse()
-            assert_matches_type(EndPointGetTopicsResponse, end_point, path=["response"])
+            client = await response.parse()
+            assert_matches_type(GetTopicsResponse, client, path=["response"])
 
         assert cast(Any, response.is_closed) is True

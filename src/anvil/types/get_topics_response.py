@@ -9,27 +9,27 @@ from pydantic import Field as FieldInfo
 from .._models import BaseModel
 
 __all__ = [
-    "EndPointGetTopicsResponse",
-    "EndPointGetTopicsResponseItem",
-    "EndPointGetTopicsResponseItemAverageRanking",
-    "EndPointGetTopicsResponseItemAverageRankingSery",
-    "EndPointGetTopicsResponseItemMentionRate",
-    "EndPointGetTopicsResponseItemMentionRateSery",
-    "EndPointGetTopicsResponseItemShareOfVoice",
-    "EndPointGetTopicsResponseItemShareOfVoiceSery",
-    "EndPointGetTopicsResponseItemTopic",
-    "EndPointGetTopicsResponseItemTopicPrompt",
-    "EndPointGetTopicsResponseItemTopicTag",
+    "GetTopicsResponse",
+    "GetTopicsResponseItem",
+    "GetTopicsResponseItemAverageRanking",
+    "GetTopicsResponseItemAverageRankingSery",
+    "GetTopicsResponseItemMentionRate",
+    "GetTopicsResponseItemMentionRateSery",
+    "GetTopicsResponseItemShareOfVoice",
+    "GetTopicsResponseItemShareOfVoiceSery",
+    "GetTopicsResponseItemTopic",
+    "GetTopicsResponseItemTopicPrompt",
+    "GetTopicsResponseItemTopicTag",
 ]
 
 
-class EndPointGetTopicsResponseItemAverageRankingSery(BaseModel):
+class GetTopicsResponseItemAverageRankingSery(BaseModel):
     date: datetime
 
     value: float
 
 
-class EndPointGetTopicsResponseItemAverageRanking(BaseModel):
+class GetTopicsResponseItemAverageRanking(BaseModel):
     average: Optional[float] = None
 
     data_format: Optional[Literal["NUMBER", "PERCENTAGE", "CURRENCY", "TEXT", "SCORE"]] = FieldInfo(
@@ -172,20 +172,20 @@ class EndPointGetTopicsResponseItemAverageRanking(BaseModel):
 
     metric_name: Optional[str] = FieldInfo(alias="metricName", default=None)
 
-    series: Optional[List[EndPointGetTopicsResponseItemAverageRankingSery]] = None
+    series: Optional[List[GetTopicsResponseItemAverageRankingSery]] = None
 
     to_date: Optional[datetime] = FieldInfo(alias="toDate", default=None)
 
     value: Optional[float] = None
 
 
-class EndPointGetTopicsResponseItemMentionRateSery(BaseModel):
+class GetTopicsResponseItemMentionRateSery(BaseModel):
     date: datetime
 
     value: float
 
 
-class EndPointGetTopicsResponseItemMentionRate(BaseModel):
+class GetTopicsResponseItemMentionRate(BaseModel):
     average: Optional[float] = None
 
     data_format: Optional[Literal["NUMBER", "PERCENTAGE", "CURRENCY", "TEXT", "SCORE"]] = FieldInfo(
@@ -328,20 +328,20 @@ class EndPointGetTopicsResponseItemMentionRate(BaseModel):
 
     metric_name: Optional[str] = FieldInfo(alias="metricName", default=None)
 
-    series: Optional[List[EndPointGetTopicsResponseItemMentionRateSery]] = None
+    series: Optional[List[GetTopicsResponseItemMentionRateSery]] = None
 
     to_date: Optional[datetime] = FieldInfo(alias="toDate", default=None)
 
     value: Optional[float] = None
 
 
-class EndPointGetTopicsResponseItemShareOfVoiceSery(BaseModel):
+class GetTopicsResponseItemShareOfVoiceSery(BaseModel):
     date: datetime
 
     value: float
 
 
-class EndPointGetTopicsResponseItemShareOfVoice(BaseModel):
+class GetTopicsResponseItemShareOfVoice(BaseModel):
     average: Optional[float] = None
 
     data_format: Optional[Literal["NUMBER", "PERCENTAGE", "CURRENCY", "TEXT", "SCORE"]] = FieldInfo(
@@ -484,14 +484,14 @@ class EndPointGetTopicsResponseItemShareOfVoice(BaseModel):
 
     metric_name: Optional[str] = FieldInfo(alias="metricName", default=None)
 
-    series: Optional[List[EndPointGetTopicsResponseItemShareOfVoiceSery]] = None
+    series: Optional[List[GetTopicsResponseItemShareOfVoiceSery]] = None
 
     to_date: Optional[datetime] = FieldInfo(alias="toDate", default=None)
 
     value: Optional[float] = None
 
 
-class EndPointGetTopicsResponseItemTopicPrompt(BaseModel):
+class GetTopicsResponseItemTopicPrompt(BaseModel):
     id: Optional[str] = None
 
     language: Optional[
@@ -514,7 +514,7 @@ class EndPointGetTopicsResponseItemTopicPrompt(BaseModel):
     text: Optional[str] = None
 
 
-class EndPointGetTopicsResponseItemTopicTag(BaseModel):
+class GetTopicsResponseItemTopicTag(BaseModel):
     color_hex: str = FieldInfo(alias="colorHex")
 
     name: str
@@ -526,7 +526,7 @@ class EndPointGetTopicsResponseItemTopicTag(BaseModel):
     topic_ids: Optional[List[str]] = FieldInfo(alias="topicIds", default=None)
 
 
-class EndPointGetTopicsResponseItemTopic(BaseModel):
+class GetTopicsResponseItemTopic(BaseModel):
     id: Optional[str] = None
 
     archived: Optional[bool] = None
@@ -657,25 +657,23 @@ class EndPointGetTopicsResponseItemTopic(BaseModel):
         ]
     ] = None
 
-    prompts: Optional[List[EndPointGetTopicsResponseItemTopicPrompt]] = None
+    prompts: Optional[List[GetTopicsResponseItemTopicPrompt]] = None
 
     seo_keyword_index: Optional[int] = FieldInfo(alias="seoKeywordIndex", default=None)
 
-    tags: Optional[List[EndPointGetTopicsResponseItemTopicTag]] = None
+    tags: Optional[List[GetTopicsResponseItemTopicTag]] = None
 
     text: Optional[str] = None
 
     website_id: Optional[str] = FieldInfo(alias="websiteId", default=None)
 
 
-class EndPointGetTopicsResponseItem(BaseModel):
+class GetTopicsResponseItem(BaseModel):
     archived: Optional[bool] = None
 
-    average_ranking: Optional[EndPointGetTopicsResponseItemAverageRanking] = FieldInfo(
-        alias="averageRanking", default=None
-    )
+    average_ranking: Optional[GetTopicsResponseItemAverageRanking] = FieldInfo(alias="averageRanking", default=None)
 
-    mention_rate: Optional[EndPointGetTopicsResponseItemMentionRate] = FieldInfo(alias="mentionRate", default=None)
+    mention_rate: Optional[GetTopicsResponseItemMentionRate] = FieldInfo(alias="mentionRate", default=None)
 
     prompts_count: Optional[int] = FieldInfo(alias="promptsCount", default=None)
 
@@ -683,11 +681,11 @@ class EndPointGetTopicsResponseItem(BaseModel):
 
     search_volume: Optional[int] = FieldInfo(alias="searchVolume", default=None)
 
-    share_of_voice: Optional[EndPointGetTopicsResponseItemShareOfVoice] = FieldInfo(alias="shareOfVoice", default=None)
+    share_of_voice: Optional[GetTopicsResponseItemShareOfVoice] = FieldInfo(alias="shareOfVoice", default=None)
 
     started: Optional[bool] = None
 
-    topic: Optional[EndPointGetTopicsResponseItemTopic] = None
+    topic: Optional[GetTopicsResponseItemTopic] = None
 
 
-EndPointGetTopicsResponse: TypeAlias = List[EndPointGetTopicsResponseItem]
+GetTopicsResponse: TypeAlias = List[GetTopicsResponseItem]

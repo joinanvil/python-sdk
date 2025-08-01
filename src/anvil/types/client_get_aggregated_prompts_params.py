@@ -7,10 +7,10 @@ from typing_extensions import Required, Annotated, TypedDict
 
 from .._utils import PropertyInfo
 
-__all__ = ["EndPointGetAggregatedPromptsParams"]
+__all__ = ["ClientGetAggregatedPromptsParams"]
 
 
-class EndPointGetAggregatedPromptsParams(TypedDict, total=False):
+class ClientGetAggregatedPromptsParams(TypedDict, total=False):
     website_topic_id: Required[Annotated[str, PropertyInfo(alias="websiteTopicId")]]
 
     from_date: Required[Annotated[int, PropertyInfo(alias="fromDate")]]

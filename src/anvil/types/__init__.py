@@ -2,14 +2,10 @@
 
 from __future__ import annotations
 
-from .end_point_get_prompt_params import EndPointGetPromptParams as EndPointGetPromptParams
-from .end_point_get_topics_params import EndPointGetTopicsParams as EndPointGetTopicsParams
-from .end_point_get_prompt_response import EndPointGetPromptResponse as EndPointGetPromptResponse
-from .end_point_get_topics_response import EndPointGetTopicsResponse as EndPointGetTopicsResponse
-from .end_point_get_metadata_response import EndPointGetMetadataResponse as EndPointGetMetadataResponse
-from .end_point_get_aggregated_prompts_params import (
-    EndPointGetAggregatedPromptsParams as EndPointGetAggregatedPromptsParams,
-)
-from .end_point_get_aggregated_prompts_response import (
-    EndPointGetAggregatedPromptsResponse as EndPointGetAggregatedPromptsResponse,
-)
+from .get_prompt_response import GetPromptResponse as GetPromptResponse
+from .get_topics_response import GetTopicsResponse as GetTopicsResponse
+from .get_metadata_response import GetMetadataResponse as GetMetadataResponse
+from .client_get_prompt_params import ClientGetPromptParams as ClientGetPromptParams
+from .client_get_topics_params import ClientGetTopicsParams as ClientGetTopicsParams
+from .get_aggregated_prompts_response import GetAggregatedPromptsResponse as GetAggregatedPromptsResponse
+from .client_get_aggregated_prompts_params import ClientGetAggregatedPromptsParams as ClientGetAggregatedPromptsParams

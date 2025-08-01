@@ -5,7 +5,7 @@ description = "The official Python library for the anvil API"
 dynamic = ["readme"]
 license = "Apache-2.0"
 authors = [
-{ name = "Anvil", email = "" },
+{ name = "Anvil", email = "barak@joinanvil.com" },
 ]
 dependencies = [
     "httpx>=0.23.0, <1",

@@ -7,10 +7,10 @@ from pydantic import Field as FieldInfo
 
 from .._models import BaseModel
 
-__all__ = ["EndPointGetMetadataResponse", "EndPointGetMetadataResponseItem", "EndPointGetMetadataResponseItemPrompt"]
+__all__ = ["GetMetadataResponse", "GetMetadataResponseItem", "GetMetadataResponseItemPrompt"]
 
 
-class EndPointGetMetadataResponseItemPrompt(BaseModel):
+class GetMetadataResponseItemPrompt(BaseModel):
     id: Optional[str] = None
 
     language: Optional[
@@ -33,14 +33,14 @@ class EndPointGetMetadataResponseItemPrompt(BaseModel):
     text: Optional[str] = None
 
 
-class EndPointGetMetadataResponseItem(BaseModel):
+class GetMetadataResponseItem(BaseModel):
     id: Optional[str] = None
 
     llm_provider: Optional[str] = FieldInfo(alias="llmProvider", default=None)
 
-    prompts: Optional[List[EndPointGetMetadataResponseItemPrompt]] = None
+    prompts: Optional[List[GetMetadataResponseItemPrompt]] = None
 
     text: Optional[str] = None
 
 
-EndPointGetMetadataResponse: TypeAlias = List[EndPointGetMetadataResponseItem]
+GetMetadataResponse: TypeAlias = List[GetMetadataResponseItem]

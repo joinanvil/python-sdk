@@ -7,10 +7,10 @@ from typing_extensions import Required, Annotated, TypedDict
 
 from .._utils import PropertyInfo
 
-__all__ = ["EndPointGetTopicsParams"]
+__all__ = ["ClientGetTopicsParams"]
 
 
-class EndPointGetTopicsParams(TypedDict, total=False):
+class ClientGetTopicsParams(TypedDict, total=False):
     from_date: Required[Annotated[int, PropertyInfo(alias="fromDate")]]
 
     llm_provider: Required[Annotated[str, PropertyInfo(alias="llmProvider")]]

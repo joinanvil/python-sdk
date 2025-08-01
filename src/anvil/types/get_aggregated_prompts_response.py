@@ -9,21 +9,21 @@ from pydantic import Field as FieldInfo
 from .._models import BaseModel
 
 __all__ = [
-    "EndPointGetAggregatedPromptsResponse",
-    "EndPointGetAggregatedPromptsResponseItem",
-    "EndPointGetAggregatedPromptsResponseItemMentionFrequency",
-    "EndPointGetAggregatedPromptsResponseItemMentionFrequencySery",
-    "EndPointGetAggregatedPromptsResponseItemSeoMetrics",
+    "GetAggregatedPromptsResponse",
+    "GetAggregatedPromptsResponseItem",
+    "GetAggregatedPromptsResponseItemMentionFrequency",
+    "GetAggregatedPromptsResponseItemMentionFrequencySery",
+    "GetAggregatedPromptsResponseItemSeoMetrics",
 ]
 
 
-class EndPointGetAggregatedPromptsResponseItemMentionFrequencySery(BaseModel):
+class GetAggregatedPromptsResponseItemMentionFrequencySery(BaseModel):
     date: datetime
 
     value: float
 
 
-class EndPointGetAggregatedPromptsResponseItemMentionFrequency(BaseModel):
+class GetAggregatedPromptsResponseItemMentionFrequency(BaseModel):
     average: Optional[float] = None
 
     data_format: Optional[Literal["NUMBER", "PERCENTAGE", "CURRENCY", "TEXT", "SCORE"]] = FieldInfo(
@@ -166,20 +166,20 @@ class EndPointGetAggregatedPromptsResponseItemMentionFrequency(BaseModel):
 
     metric_name: Optional[str] = FieldInfo(alias="metricName", default=None)
 
-    series: Optional[List[EndPointGetAggregatedPromptsResponseItemMentionFrequencySery]] = None
+    series: Optional[List[GetAggregatedPromptsResponseItemMentionFrequencySery]] = None
 
     to_date: Optional[datetime] = FieldInfo(alias="toDate", default=None)
 
     value: Optional[float] = None
 
 
-class EndPointGetAggregatedPromptsResponseItemSeoMetrics(BaseModel):
+class GetAggregatedPromptsResponseItemSeoMetrics(BaseModel):
     cpc: Optional[float] = None
 
     search_volume: Optional[int] = FieldInfo(alias="searchVolume", default=None)
 
 
-class EndPointGetAggregatedPromptsResponseItem(BaseModel):
+class GetAggregatedPromptsResponseItem(BaseModel):
     answer_text: Optional[str] = FieldInfo(alias="answerText", default=None)
 
     important_terms: Optional[List[str]] = FieldInfo(alias="importantTerms", default=None)
@@ -188,7 +188,7 @@ class EndPointGetAggregatedPromptsResponseItem(BaseModel):
 
     latest_run_data: Optional[datetime] = FieldInfo(alias="latestRunData", default=None)
 
-    mention_frequency: Optional[EndPointGetAggregatedPromptsResponseItemMentionFrequency] = FieldInfo(
+    mention_frequency: Optional[GetAggregatedPromptsResponseItemMentionFrequency] = FieldInfo(
         alias="mentionFrequency", default=None
     )
 
@@ -206,13 +206,11 @@ class EndPointGetAggregatedPromptsResponseItem(BaseModel):
 
     ranking: Optional[float] = None
 
-    seo_metrics: Optional[EndPointGetAggregatedPromptsResponseItemSeoMetrics] = FieldInfo(
-        alias="seoMetrics", default=None
-    )
+    seo_metrics: Optional[GetAggregatedPromptsResponseItemSeoMetrics] = FieldInfo(alias="seoMetrics", default=None)
 
     share_of_voice: Optional[float] = FieldInfo(alias="shareOfVoice", default=None)
 
     sources: Optional[List[str]] = None
 
 
-EndPointGetAggregatedPromptsResponse: TypeAlias = List[EndPointGetAggregatedPromptsResponseItem]
+GetAggregatedPromptsResponse: TypeAlias = List[GetAggregatedPromptsResponseItem]

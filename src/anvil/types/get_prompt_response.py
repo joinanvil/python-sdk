@@ -8,10 +8,10 @@ from pydantic import Field as FieldInfo
 
 from .._models import BaseModel
 
-__all__ = ["EndPointGetPromptResponse", "EndPointGetPromptResponseItem", "EndPointGetPromptResponseItemData"]
+__all__ = ["GetPromptResponse", "GetPromptResponseItem", "GetPromptResponseItemData"]
 
 
-class EndPointGetPromptResponseItemData(BaseModel):
+class GetPromptResponseItemData(BaseModel):
     important_terms: Optional[List[str]] = FieldInfo(alias="importantTerms", default=None)
 
     mentions: Optional[Dict[str, int]] = None
@@ -27,7 +27,7 @@ class EndPointGetPromptResponseItemData(BaseModel):
     sources: Optional[List[str]] = None
 
 
-class EndPointGetPromptResponseItem(BaseModel):
+class GetPromptResponseItem(BaseModel):
     id: Optional[str] = None
 
     answer_text: Optional[str] = FieldInfo(alias="answerText", default=None)
@@ -38,7 +38,7 @@ class EndPointGetPromptResponseItem(BaseModel):
 
     created: Optional[datetime] = None
 
-    data: Optional[EndPointGetPromptResponseItemData] = None
+    data: Optional[GetPromptResponseItemData] = None
 
     language: Optional[
         Literal[
@@ -194,4 +194,4 @@ class EndPointGetPromptResponseItem(BaseModel):
     website_topic_id: Optional[str] = FieldInfo(alias="websiteTopicId", default=None)
 
 
-EndPointGetPromptResponse: TypeAlias = List[EndPointGetPromptResponseItem]
+GetPromptResponse: TypeAlias = List[GetPromptResponseItem]

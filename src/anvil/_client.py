@@ -97,7 +97,7 @@ class Anvil(SyncAPIClient):
         if base_url is None:
             base_url = os.environ.get("ANVIL_BASE_URL")
         if base_url is None:
-            base_url = f"http://localhost:8081"
+            base_url = f"https://api.joinanvil.com/api/beta"
 
         super().__init__(
             version=__version__,
@@ -415,7 +415,7 @@ class AsyncAnvil(AsyncAPIClient):
         if base_url is None:
             base_url = os.environ.get("ANVIL_BASE_URL")
         if base_url is None:
-            base_url = f"http://localhost:8081"
+            base_url = f"https://api.joinanvil.com/api/beta"
 
         super().__init__(
             version=__version__,

@@ -1,5 +1,17 @@
 # Changelog
 
+## 0.1.0-alpha.2 (2025-08-02)
+
+Full Changelog: [v0.1.0-alpha.1...v0.1.0-alpha.2](https://github.com/joinanvil/python-sdk/compare/v0.1.0-alpha.1...v0.1.0-alpha.2)
+
+### Features
+
+* **api:** manual updates ([5831868](https://github.com/joinanvil/python-sdk/commit/58318680ff4dfeaedea49f27693365757d2baf6b))
+* **api:** manual updates ([3ba58eb](https://github.com/joinanvil/python-sdk/commit/3ba58eb3f94ba60d7929105bb13db3acbafbb63f))
+* **api:** manual updates ([dbe8d6a](https://github.com/joinanvil/python-sdk/commit/dbe8d6a806f3b172456a205e759dddccb3854c21))
+* **api:** manual updates ([d5a2c8e](https://github.com/joinanvil/python-sdk/commit/d5a2c8eedd4c9f5e76f984aab23d1346cacafc7f))
+* **client:** support file upload requests ([7b98b99](https://github.com/joinanvil/python-sdk/commit/7b98b99d1a8ef5b9445243b2bdf71eab19f39a3c))
+
 ## 0.1.0-alpha.1 (2025-07-30)
 
 Full Changelog: [v0.0.1-alpha.1...v0.1.0-alpha.1](https://github.com/joinanvil/python-sdk/compare/v0.0.1-alpha.1...v0.1.0-alpha.1)

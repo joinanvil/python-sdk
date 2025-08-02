@@ -3,38 +3,56 @@
 from __future__ import annotations
 
 import os
-from typing import Any, Union, Mapping
+from typing import Any, List, Union, Mapping
 from typing_extensions import Self, override
 
 import httpx
 
 from . import _exceptions
 from ._qs import Querystring
+from .types import client_get_prompt_params, client_get_topics_params, client_get_aggregated_prompts_params
 from ._types import (
     NOT_GIVEN,
+    Body,
     Omit,
+    Query,
+    Headers,
     Timeout,
     NotGiven,
     Transport,
     ProxiesTypes,
     RequestOptions,
 )
-from ._utils import is_given, get_async_library
+from ._utils import (
+    is_given,
+    maybe_transform,
+    get_async_library,
+    async_maybe_transform,
+)
 from ._version import __version__
+from ._response import (
+    to_raw_response_wrapper,
+    to_streamed_response_wrapper,
+    async_to_raw_response_wrapper,
+    async_to_streamed_response_wrapper,
+)
 from ._streaming import Stream as Stream, AsyncStream as AsyncStream
 from ._exceptions import AnvilError, APIStatusError
 from ._base_client import (
     DEFAULT_MAX_RETRIES,
     SyncAPIClient,
     AsyncAPIClient,
+    make_request_options,
 )
-from .resources.beta import beta
+from .types.get_prompt_response import GetPromptResponse
+from .types.get_topics_response import GetTopicsResponse
+from .types.get_metadata_response import GetMetadataResponse
+from .types.get_aggregated_prompts_response import GetAggregatedPromptsResponse
 
 __all__ = ["Timeout", "Transport", "ProxiesTypes", "RequestOptions", "Anvil", "AsyncAnvil", "Client", "AsyncClient"]
 
 
 class Anvil(SyncAPIClient):
-    beta: beta.BetaResource
     with_raw_response: AnvilWithRawResponse
     with_streaming_response: AnvilWithStreamedResponse
 
@@ -79,7 +97,7 @@ class Anvil(SyncAPIClient):
         if base_url is None:
             base_url = os.environ.get("ANVIL_BASE_URL")
         if base_url is None:
-            base_url = f"http://localhost:8081"
+            base_url = f"https://api.joinanvil.com/api/beta"
 
         super().__init__(
             version=__version__,
@@ -92,7 +110,6 @@ class Anvil(SyncAPIClient):
             _strict_response_validation=_strict_response_validation,
         )
 
-        self.beta = beta.BetaResource(self)
         self.with_raw_response = AnvilWithRawResponse(self)
         self.with_streaming_response = AnvilWithStreamedResponse(self)
 
@@ -167,6 +184,158 @@ class Anvil(SyncAPIClient):
     # client.with_options(timeout=10).foo.create(...)
     with_options = copy
 
+    def get_aggregated_prompts(
+        self,
+        *,
+        website_topic_id: str,
+        from_date: int,
+        llm_provider: str,
+        tag_ids: List[str],
+        to_date: int,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+    ) -> GetAggregatedPromptsResponse:
+        """
+        Returns metrics for all prompts with frequency over time topic ID
+
+        Args:
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        return self.post(
+            "/api/beta/prompts",
+            body=maybe_transform(
+                {
+                    "from_date": from_date,
+                    "llm_provider": llm_provider,
+                    "tag_ids": tag_ids,
+                    "to_date": to_date,
+                },
+                client_get_aggregated_prompts_params.ClientGetAggregatedPromptsParams,
+            ),
+            options=make_request_options(
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                query=maybe_transform(
+                    {"website_topic_id": website_topic_id},
+                    client_get_aggregated_prompts_params.ClientGetAggregatedPromptsParams,
+                ),
+            ),
+            cast_to=GetAggregatedPromptsResponse,
+        )
+
+    def get_metadata(
+        self,
+        *,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+    ) -> GetMetadataResponse:
+        """Returns all metadata by website ID"""
+        return self.get(
+            "/api/beta/metadata",
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=GetMetadataResponse,
+        )
+
+    def get_prompt(
+        self,
+        *,
+        prompt_id: str,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+    ) -> GetPromptResponse:
+        """
+        Returns all related metrics data by prompt ID
+
+        Args:
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        return self.get(
+            "/api/beta/prompts",
+            options=make_request_options(
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                query=maybe_transform({"prompt_id": prompt_id}, client_get_prompt_params.ClientGetPromptParams),
+            ),
+            cast_to=GetPromptResponse,
+        )
+
+    def get_topics(
+        self,
+        *,
+        from_date: int,
+        llm_provider: str,
+        tag_ids: List[str],
+        to_date: int,
+        archive: bool | NotGiven = NOT_GIVEN,
+        competitor_url: str | NotGiven = NOT_GIVEN,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+    ) -> GetTopicsResponse:
+        """
+        Returns metrics for all the topics by website ID
+
+        Args:
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        return self.post(
+            "/api/beta/topics",
+            body=maybe_transform(
+                {
+                    "from_date": from_date,
+                    "llm_provider": llm_provider,
+                    "tag_ids": tag_ids,
+                    "to_date": to_date,
+                    "archive": archive,
+                    "competitor_url": competitor_url,
+                },
+                client_get_topics_params.ClientGetTopicsParams,
+            ),
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=GetTopicsResponse,
+        )
+
     @override
     def _make_status_error(
         self,
@@ -202,7 +371,6 @@ class Anvil(SyncAPIClient):
 
 
 class AsyncAnvil(AsyncAPIClient):
-    beta: beta.AsyncBetaResource
     with_raw_response: AsyncAnvilWithRawResponse
     with_streaming_response: AsyncAnvilWithStreamedResponse
 
@@ -247,7 +415,7 @@ class AsyncAnvil(AsyncAPIClient):
         if base_url is None:
             base_url = os.environ.get("ANVIL_BASE_URL")
         if base_url is None:
-            base_url = f"http://localhost:8081"
+            base_url = f"https://api.joinanvil.com/api/beta"
 
         super().__init__(
             version=__version__,
@@ -260,7 +428,6 @@ class AsyncAnvil(AsyncAPIClient):
             _strict_response_validation=_strict_response_validation,
         )
 
-        self.beta = beta.AsyncBetaResource(self)
         self.with_raw_response = AsyncAnvilWithRawResponse(self)
         self.with_streaming_response = AsyncAnvilWithStreamedResponse(self)
 
@@ -335,6 +502,160 @@ class AsyncAnvil(AsyncAPIClient):
     # client.with_options(timeout=10).foo.create(...)
     with_options = copy
 
+    async def get_aggregated_prompts(
+        self,
+        *,
+        website_topic_id: str,
+        from_date: int,
+        llm_provider: str,
+        tag_ids: List[str],
+        to_date: int,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+    ) -> GetAggregatedPromptsResponse:
+        """
+        Returns metrics for all prompts with frequency over time topic ID
+
+        Args:
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        return await self.post(
+            "/api/beta/prompts",
+            body=await async_maybe_transform(
+                {
+                    "from_date": from_date,
+                    "llm_provider": llm_provider,
+                    "tag_ids": tag_ids,
+                    "to_date": to_date,
+                },
+                client_get_aggregated_prompts_params.ClientGetAggregatedPromptsParams,
+            ),
+            options=make_request_options(
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                query=await async_maybe_transform(
+                    {"website_topic_id": website_topic_id},
+                    client_get_aggregated_prompts_params.ClientGetAggregatedPromptsParams,
+                ),
+            ),
+            cast_to=GetAggregatedPromptsResponse,
+        )
+
+    async def get_metadata(
+        self,
+        *,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+    ) -> GetMetadataResponse:
+        """Returns all metadata by website ID"""
+        return await self.get(
+            "/api/beta/metadata",
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=GetMetadataResponse,
+        )
+
+    async def get_prompt(
+        self,
+        *,
+        prompt_id: str,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+    ) -> GetPromptResponse:
+        """
+        Returns all related metrics data by prompt ID
+
+        Args:
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        return await self.get(
+            "/api/beta/prompts",
+            options=make_request_options(
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                query=await async_maybe_transform(
+                    {"prompt_id": prompt_id}, client_get_prompt_params.ClientGetPromptParams
+                ),
+            ),
+            cast_to=GetPromptResponse,
+        )
+
+    async def get_topics(
+        self,
+        *,
+        from_date: int,
+        llm_provider: str,
+        tag_ids: List[str],
+        to_date: int,
+        archive: bool | NotGiven = NOT_GIVEN,
+        competitor_url: str | NotGiven = NOT_GIVEN,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+    ) -> GetTopicsResponse:
+        """
+        Returns metrics for all the topics by website ID
+
+        Args:
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        return await self.post(
+            "/api/beta/topics",
+            body=await async_maybe_transform(
+                {
+                    "from_date": from_date,
+                    "llm_provider": llm_provider,
+                    "tag_ids": tag_ids,
+                    "to_date": to_date,
+                    "archive": archive,
+                    "competitor_url": competitor_url,
+                },
+                client_get_topics_params.ClientGetTopicsParams,
+            ),
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=GetTopicsResponse,
+        )
+
     @override
     def _make_status_error(
         self,
@@ -371,22 +692,66 @@ class AsyncAnvil(AsyncAPIClient):
 
 class AnvilWithRawResponse:
     def __init__(self, client: Anvil) -> None:
-        self.beta = beta.BetaResourceWithRawResponse(client.beta)
+        self.get_aggregated_prompts = to_raw_response_wrapper(
+            client.get_aggregated_prompts,
+        )
+        self.get_metadata = to_raw_response_wrapper(
+            client.get_metadata,
+        )
+        self.get_prompt = to_raw_response_wrapper(
+            client.get_prompt,
+        )
+        self.get_topics = to_raw_response_wrapper(
+            client.get_topics,
+        )
 
 
 class AsyncAnvilWithRawResponse:
     def __init__(self, client: AsyncAnvil) -> None:
-        self.beta = beta.AsyncBetaResourceWithRawResponse(client.beta)
+        self.get_aggregated_prompts = async_to_raw_response_wrapper(
+            client.get_aggregated_prompts,
+        )
+        self.get_metadata = async_to_raw_response_wrapper(
+            client.get_metadata,
+        )
+        self.get_prompt = async_to_raw_response_wrapper(
+            client.get_prompt,
+        )
+        self.get_topics = async_to_raw_response_wrapper(
+            client.get_topics,
+        )
 
 
 class AnvilWithStreamedResponse:
     def __init__(self, client: Anvil) -> None:
-        self.beta = beta.BetaResourceWithStreamingResponse(client.beta)
+        self.get_aggregated_prompts = to_streamed_response_wrapper(
+            client.get_aggregated_prompts,
+        )
+        self.get_metadata = to_streamed_response_wrapper(
+            client.get_metadata,
+        )
+        self.get_prompt = to_streamed_response_wrapper(
+            client.get_prompt,
+        )
+        self.get_topics = to_streamed_response_wrapper(
+            client.get_topics,
+        )
 
 
 class AsyncAnvilWithStreamedResponse:
     def __init__(self, client: AsyncAnvil) -> None:
-        self.beta = beta.AsyncBetaResourceWithStreamingResponse(client.beta)
+        self.get_aggregated_prompts = async_to_streamed_response_wrapper(
+            client.get_aggregated_prompts,
+        )
+        self.get_metadata = async_to_streamed_response_wrapper(
+            client.get_metadata,
+        )
+        self.get_prompt = async_to_streamed_response_wrapper(
+            client.get_prompt,
+        )
+        self.get_topics = async_to_streamed_response_wrapper(
+            client.get_topics,
+        )
 
 
 Client = Anvil

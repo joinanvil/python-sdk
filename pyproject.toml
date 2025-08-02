@@ -1,11 +1,11 @@
 [project]
 name = "joinanvil"
-version = "0.1.0-alpha.1"
+version = "0.1.0-alpha.2"
 description = "The official Python library for the anvil API"
 dynamic = ["readme"]
 license = "Apache-2.0"
 authors = [
-{ name = "Anvil", email = "" },
+{ name = "Anvil", email = "barak@joinanvil.com" },
 ]
 dependencies = [
     "httpx>=0.23.0, <1",

@@ -30,6 +30,8 @@ class GetPromptResponseItemData(BaseModel):
 class GetPromptResponseItem(BaseModel):
     id: Optional[str] = None
 
+    answer_process_model: Optional[str] = FieldInfo(alias="answerProcessModel", default=None)
+
     answer_text: Optional[str] = FieldInfo(alias="answerText", default=None)
 
     bright_data_prompt_index: Optional[int] = FieldInfo(alias="brightDataPromptIndex", default=None)

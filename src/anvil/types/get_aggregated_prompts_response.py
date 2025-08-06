@@ -12,18 +12,21 @@ __all__ = [
     "GetAggregatedPromptsResponse",
     "GetAggregatedPromptsResponseItem",
     "GetAggregatedPromptsResponseItemMentionFrequency",
-    "GetAggregatedPromptsResponseItemMentionFrequencySery",
+    "GetAggregatedPromptsResponseItemMentionFrequencyCurrent",
+    "GetAggregatedPromptsResponseItemMentionFrequencyCurrentSery",
+    "GetAggregatedPromptsResponseItemMentionFrequencyPrevious",
+    "GetAggregatedPromptsResponseItemMentionFrequencyPreviousSery",
     "GetAggregatedPromptsResponseItemSeoMetrics",
 ]
 
 
-class GetAggregatedPromptsResponseItemMentionFrequencySery(BaseModel):
+class GetAggregatedPromptsResponseItemMentionFrequencyCurrentSery(BaseModel):
     date: datetime
 
     value: float
 
 
-class GetAggregatedPromptsResponseItemMentionFrequency(BaseModel):
+class GetAggregatedPromptsResponseItemMentionFrequencyCurrent(BaseModel):
     average: Optional[float] = None
 
     data_format: Optional[Literal["NUMBER", "PERCENTAGE", "CURRENCY", "TEXT", "SCORE"]] = FieldInfo(
@@ -167,11 +170,174 @@ class GetAggregatedPromptsResponseItemMentionFrequency(BaseModel):
 
     metric_name: Optional[str] = FieldInfo(alias="metricName", default=None)
 
-    series: Optional[List[GetAggregatedPromptsResponseItemMentionFrequencySery]] = None
+    series: Optional[List[GetAggregatedPromptsResponseItemMentionFrequencyCurrentSery]] = None
 
     to_date: Optional[datetime] = FieldInfo(alias="toDate", default=None)
 
     value: Optional[float] = None
+
+
+class GetAggregatedPromptsResponseItemMentionFrequencyPreviousSery(BaseModel):
+    date: datetime
+
+    value: float
+
+
+class GetAggregatedPromptsResponseItemMentionFrequencyPrevious(BaseModel):
+    average: Optional[float] = None
+
+    data_format: Optional[Literal["NUMBER", "PERCENTAGE", "CURRENCY", "TEXT", "SCORE"]] = FieldInfo(
+        alias="dataFormat", default=None
+    )
+
+    dates: Optional[List[datetime]] = None
+
+    days_span: Optional[int] = FieldInfo(alias="daysSpan", default=None)
+
+    delta: Optional[float] = None
+
+    display_name: Optional[str] = FieldInfo(alias="displayName", default=None)
+
+    from_date: Optional[datetime] = FieldInfo(alias="fromDate", default=None)
+
+    language: Optional[
+        Literal[
+            "ENGLISH",
+            "SPANISH",
+            "PORTUGUESE",
+            "HEBREW",
+            "GERMAN",
+            "ITALIAN",
+            "FRENCH",
+            "MANDARIN",
+            "HINDI",
+            "ARABIC",
+            "JAPANESE",
+            "RUSSIAN",
+            "TURKISH",
+        ]
+    ] = None
+
+    locale: Optional[
+        Literal[
+            "GLOBAL",
+            "ISRAEL",
+            "EU",
+            "UK",
+            "US",
+            "IL",
+            "AL",
+            "AZ",
+            "KG",
+            "BA",
+            "UZ",
+            "BI",
+            "XK",
+            "SM",
+            "DE",
+            "AT",
+            "CH",
+            "IE",
+            "IM",
+            "FR",
+            "ES",
+            "NL",
+            "IT",
+            "PT",
+            "BE",
+            "AD",
+            "MT",
+            "MC",
+            "MA",
+            "LU",
+            "TN",
+            "DZ",
+            "GI",
+            "LI",
+            "SE",
+            "DK",
+            "FI",
+            "NO",
+            "AX",
+            "IS",
+            "GG",
+            "JE",
+            "GL",
+            "VA",
+            "FX",
+            "FO",
+            "AF",
+            "AM",
+            "AU",
+            "BH",
+            "BD",
+            "BT",
+            "BN",
+            "KH",
+            "CN",
+            "CY",
+            "GE",
+            "HK",
+            "IN",
+            "ID",
+            "IR",
+            "IQ",
+            "JP",
+            "JO",
+            "KZ",
+            "KW",
+            "LA",
+            "LB",
+            "MY",
+            "MV",
+            "MN",
+            "MM",
+            "NP",
+            "OM",
+            "PK",
+            "PH",
+            "QA",
+            "SA",
+            "SG",
+            "KR",
+            "LK",
+            "SY",
+            "TW",
+            "TH",
+            "TR",
+            "AE",
+            "VN",
+            "YE",
+            "AR",
+            "BO",
+            "BR",
+            "CL",
+            "CO",
+            "EC",
+            "GY",
+            "PY",
+            "PE",
+            "SR",
+            "UY",
+            "VE",
+        ]
+    ] = None
+
+    median: Optional[float] = None
+
+    metric_name: Optional[str] = FieldInfo(alias="metricName", default=None)
+
+    series: Optional[List[GetAggregatedPromptsResponseItemMentionFrequencyPreviousSery]] = None
+
+    to_date: Optional[datetime] = FieldInfo(alias="toDate", default=None)
+
+    value: Optional[float] = None
+
+
+class GetAggregatedPromptsResponseItemMentionFrequency(BaseModel):
+    current: Optional[GetAggregatedPromptsResponseItemMentionFrequencyCurrent] = None
+
+    previous: Optional[GetAggregatedPromptsResponseItemMentionFrequencyPrevious] = None
 
 
 class GetAggregatedPromptsResponseItemSeoMetrics(BaseModel):

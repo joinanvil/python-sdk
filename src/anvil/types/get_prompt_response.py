@@ -56,6 +56,7 @@ class GetPromptResponseItem(BaseModel):
             "ARABIC",
             "JAPANESE",
             "RUSSIAN",
+            "TURKISH",
         ]
     ] = None
 

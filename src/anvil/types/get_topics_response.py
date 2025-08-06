@@ -60,6 +60,7 @@ class GetTopicsResponseItemAverageRanking(BaseModel):
             "ARABIC",
             "JAPANESE",
             "RUSSIAN",
+            "TURKISH",
         ]
     ] = None
 
@@ -216,6 +217,7 @@ class GetTopicsResponseItemMentionRate(BaseModel):
             "ARABIC",
             "JAPANESE",
             "RUSSIAN",
+            "TURKISH",
         ]
     ] = None
 
@@ -372,6 +374,7 @@ class GetTopicsResponseItemShareOfVoice(BaseModel):
             "ARABIC",
             "JAPANESE",
             "RUSSIAN",
+            "TURKISH",
         ]
     ] = None
 
@@ -508,6 +511,7 @@ class GetTopicsResponseItemTopicPrompt(BaseModel):
             "ARABIC",
             "JAPANESE",
             "RUSSIAN",
+            "TURKISH",
         ]
     ] = None
 
@@ -545,6 +549,7 @@ class GetTopicsResponseItemTopic(BaseModel):
             "ARABIC",
             "JAPANESE",
             "RUSSIAN",
+            "TURKISH",
         ]
     ] = None
 

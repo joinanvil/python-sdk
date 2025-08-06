@@ -27,6 +27,7 @@ class GetMetadataResponseItemPrompt(BaseModel):
             "ARABIC",
             "JAPANESE",
             "RUSSIAN",
+            "TURKISH",
         ]
     ] = None
 

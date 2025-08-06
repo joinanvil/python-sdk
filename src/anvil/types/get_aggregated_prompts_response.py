@@ -54,6 +54,7 @@ class GetAggregatedPromptsResponseItemMentionFrequency(BaseModel):
             "ARABIC",
             "JAPANESE",
             "RUSSIAN",
+            "TURKISH",
         ]
     ] = None
 

@@ -12,24 +12,353 @@ __all__ = [
     "GetTopicsResponse",
     "GetTopicsResponseItem",
     "GetTopicsResponseItemAverageRanking",
-    "GetTopicsResponseItemAverageRankingSery",
+    "GetTopicsResponseItemAverageRankingCurrent",
+    "GetTopicsResponseItemAverageRankingCurrentSery",
+    "GetTopicsResponseItemAverageRankingPrevious",
+    "GetTopicsResponseItemAverageRankingPreviousSery",
     "GetTopicsResponseItemMentionRate",
-    "GetTopicsResponseItemMentionRateSery",
+    "GetTopicsResponseItemMentionRateCurrent",
+    "GetTopicsResponseItemMentionRateCurrentSery",
+    "GetTopicsResponseItemMentionRatePrevious",
+    "GetTopicsResponseItemMentionRatePreviousSery",
     "GetTopicsResponseItemShareOfVoice",
-    "GetTopicsResponseItemShareOfVoiceSery",
+    "GetTopicsResponseItemShareOfVoiceCurrent",
+    "GetTopicsResponseItemShareOfVoiceCurrentSery",
+    "GetTopicsResponseItemShareOfVoicePrevious",
+    "GetTopicsResponseItemShareOfVoicePreviousSery",
     "GetTopicsResponseItemTopic",
     "GetTopicsResponseItemTopicPrompt",
     "GetTopicsResponseItemTopicTag",
 ]
 
 
-class GetTopicsResponseItemAverageRankingSery(BaseModel):
+class GetTopicsResponseItemAverageRankingCurrentSery(BaseModel):
     date: datetime
 
     value: float
+
+
+class GetTopicsResponseItemAverageRankingCurrent(BaseModel):
+    average: Optional[float] = None
+
+    data_format: Optional[Literal["NUMBER", "PERCENTAGE", "CURRENCY", "TEXT", "SCORE"]] = FieldInfo(
+        alias="dataFormat", default=None
+    )
+
+    dates: Optional[List[datetime]] = None
+
+    days_span: Optional[int] = FieldInfo(alias="daysSpan", default=None)
+
+    delta: Optional[float] = None
+
+    display_name: Optional[str] = FieldInfo(alias="displayName", default=None)
+
+    from_date: Optional[datetime] = FieldInfo(alias="fromDate", default=None)
+
+    language: Optional[
+        Literal[
+            "ENGLISH",
+            "SPANISH",
+            "PORTUGUESE",
+            "HEBREW",
+            "GERMAN",
+            "ITALIAN",
+            "FRENCH",
+            "MANDARIN",
+            "HINDI",
+            "ARABIC",
+            "JAPANESE",
+            "RUSSIAN",
+            "TURKISH",
+        ]
+    ] = None
+
+    locale: Optional[
+        Literal[
+            "GLOBAL",
+            "ISRAEL",
+            "EU",
+            "UK",
+            "US",
+            "IL",
+            "AL",
+            "AZ",
+            "KG",
+            "BA",
+            "UZ",
+            "BI",
+            "XK",
+            "SM",
+            "DE",
+            "AT",
+            "CH",
+            "IE",
+            "IM",
+            "FR",
+            "ES",
+            "NL",
+            "IT",
+            "PT",
+            "BE",
+            "AD",
+            "MT",
+            "MC",
+            "MA",
+            "LU",
+            "TN",
+            "DZ",
+            "GI",
+            "LI",
+            "SE",
+            "DK",
+            "FI",
+            "NO",
+            "AX",
+            "IS",
+            "GG",
+            "JE",
+            "GL",
+            "VA",
+            "FX",
+            "FO",
+            "AF",
+            "AM",
+            "AU",
+            "BH",
+            "BD",
+            "BT",
+            "BN",
+            "KH",
+            "CN",
+            "CY",
+            "GE",
+            "HK",
+            "IN",
+            "ID",
+            "IR",
+            "IQ",
+            "JP",
+            "JO",
+            "KZ",
+            "KW",
+            "LA",
+            "LB",
+            "MY",
+            "MV",
+            "MN",
+            "MM",
+            "NP",
+            "OM",
+            "PK",
+            "PH",
+            "QA",
+            "SA",
+            "SG",
+            "KR",
+            "LK",
+            "SY",
+            "TW",
+            "TH",
+            "TR",
+            "AE",
+            "VN",
+            "YE",
+            "AR",
+            "BO",
+            "BR",
+            "CL",
+            "CO",
+            "EC",
+            "GY",
+            "PY",
+            "PE",
+            "SR",
+            "UY",
+            "VE",
+        ]
+    ] = None
+
+    median: Optional[float] = None
+
+    metric_name: Optional[str] = FieldInfo(alias="metricName", default=None)
+
+    series: Optional[List[GetTopicsResponseItemAverageRankingCurrentSery]] = None
+
+    to_date: Optional[datetime] = FieldInfo(alias="toDate", default=None)
+
+    value: Optional[float] = None
+
+
+class GetTopicsResponseItemAverageRankingPreviousSery(BaseModel):
+    date: datetime
+
+    value: float
+
+
+class GetTopicsResponseItemAverageRankingPrevious(BaseModel):
+    average: Optional[float] = None
+
+    data_format: Optional[Literal["NUMBER", "PERCENTAGE", "CURRENCY", "TEXT", "SCORE"]] = FieldInfo(
+        alias="dataFormat", default=None
+    )
+
+    dates: Optional[List[datetime]] = None
+
+    days_span: Optional[int] = FieldInfo(alias="daysSpan", default=None)
+
+    delta: Optional[float] = None
+
+    display_name: Optional[str] = FieldInfo(alias="displayName", default=None)
+
+    from_date: Optional[datetime] = FieldInfo(alias="fromDate", default=None)
+
+    language: Optional[
+        Literal[
+            "ENGLISH",
+            "SPANISH",
+            "PORTUGUESE",
+            "HEBREW",
+            "GERMAN",
+            "ITALIAN",
+            "FRENCH",
+            "MANDARIN",
+            "HINDI",
+            "ARABIC",
+            "JAPANESE",
+            "RUSSIAN",
+            "TURKISH",
+        ]
+    ] = None
+
+    locale: Optional[
+        Literal[
+            "GLOBAL",
+            "ISRAEL",
+            "EU",
+            "UK",
+            "US",
+            "IL",
+            "AL",
+            "AZ",
+            "KG",
+            "BA",
+            "UZ",
+            "BI",
+            "XK",
+            "SM",
+            "DE",
+            "AT",
+            "CH",
+            "IE",
+            "IM",
+            "FR",
+            "ES",
+            "NL",
+            "IT",
+            "PT",
+            "BE",
+            "AD",
+            "MT",
+            "MC",
+            "MA",
+            "LU",
+            "TN",
+            "DZ",
+            "GI",
+            "LI",
+            "SE",
+            "DK",
+            "FI",
+            "NO",
+            "AX",
+            "IS",
+            "GG",
+            "JE",
+            "GL",
+            "VA",
+            "FX",
+            "FO",
+            "AF",
+            "AM",
+            "AU",
+            "BH",
+            "BD",
+            "BT",
+            "BN",
+            "KH",
+            "CN",
+            "CY",
+            "GE",
+            "HK",
+            "IN",
+            "ID",
+            "IR",
+            "IQ",
+            "JP",
+            "JO",
+            "KZ",
+            "KW",
+            "LA",
+            "LB",
+            "MY",
+            "MV",
+            "MN",
+            "MM",
+            "NP",
+            "OM",
+            "PK",
+            "PH",
+            "QA",
+            "SA",
+            "SG",
+            "KR",
+            "LK",
+            "SY",
+            "TW",
+            "TH",
+            "TR",
+            "AE",
+            "VN",
+            "YE",
+            "AR",
+            "BO",
+            "BR",
+            "CL",
+            "CO",
+            "EC",
+            "GY",
+            "PY",
+            "PE",
+            "SR",
+            "UY",
+            "VE",
+        ]
+    ] = None
+
+    median: Optional[float] = None
+
+    metric_name: Optional[str] = FieldInfo(alias="metricName", default=None)
+
+    series: Optional[List[GetTopicsResponseItemAverageRankingPreviousSery]] = None
+
+    to_date: Optional[datetime] = FieldInfo(alias="toDate", default=None)
+
+    value: Optional[float] = None
 
 
 class GetTopicsResponseItemAverageRanking(BaseModel):
+    current: Optional[GetTopicsResponseItemAverageRankingCurrent] = None
+
+    previous: Optional[GetTopicsResponseItemAverageRankingPrevious] = None
+
+
+class GetTopicsResponseItemMentionRateCurrentSery(BaseModel):
+    date: datetime
+
+    value: float
+
+
+class GetTopicsResponseItemMentionRateCurrent(BaseModel):
     average: Optional[float] = None
 
     data_format: Optional[Literal["NUMBER", "PERCENTAGE", "CURRENCY", "TEXT", "SCORE"]] = FieldInfo(
@@ -173,177 +502,183 @@ class GetTopicsResponseItemAverageRanking(BaseModel):
 
     metric_name: Optional[str] = FieldInfo(alias="metricName", default=None)
 
-    series: Optional[List[GetTopicsResponseItemAverageRankingSery]] = None
+    series: Optional[List[GetTopicsResponseItemMentionRateCurrentSery]] = None
 
     to_date: Optional[datetime] = FieldInfo(alias="toDate", default=None)
 
     value: Optional[float] = None
 
 
-class GetTopicsResponseItemMentionRateSery(BaseModel):
+class GetTopicsResponseItemMentionRatePreviousSery(BaseModel):
     date: datetime
 
     value: float
+
+
+class GetTopicsResponseItemMentionRatePrevious(BaseModel):
+    average: Optional[float] = None
+
+    data_format: Optional[Literal["NUMBER", "PERCENTAGE", "CURRENCY", "TEXT", "SCORE"]] = FieldInfo(
+        alias="dataFormat", default=None
+    )
+
+    dates: Optional[List[datetime]] = None
+
+    days_span: Optional[int] = FieldInfo(alias="daysSpan", default=None)
+
+    delta: Optional[float] = None
+
+    display_name: Optional[str] = FieldInfo(alias="displayName", default=None)
+
+    from_date: Optional[datetime] = FieldInfo(alias="fromDate", default=None)
+
+    language: Optional[
+        Literal[
+            "ENGLISH",
+            "SPANISH",
+            "PORTUGUESE",
+            "HEBREW",
+            "GERMAN",
+            "ITALIAN",
+            "FRENCH",
+            "MANDARIN",
+            "HINDI",
+            "ARABIC",
+            "JAPANESE",
+            "RUSSIAN",
+            "TURKISH",
+        ]
+    ] = None
+
+    locale: Optional[
+        Literal[
+            "GLOBAL",
+            "ISRAEL",
+            "EU",
+            "UK",
+            "US",
+            "IL",
+            "AL",
+            "AZ",
+            "KG",
+            "BA",
+            "UZ",
+            "BI",
+            "XK",
+            "SM",
+            "DE",
+            "AT",
+            "CH",
+            "IE",
+            "IM",
+            "FR",
+            "ES",
+            "NL",
+            "IT",
+            "PT",
+            "BE",
+            "AD",
+            "MT",
+            "MC",
+            "MA",
+            "LU",
+            "TN",
+            "DZ",
+            "GI",
+            "LI",
+            "SE",
+            "DK",
+            "FI",
+            "NO",
+            "AX",
+            "IS",
+            "GG",
+            "JE",
+            "GL",
+            "VA",
+            "FX",
+            "FO",
+            "AF",
+            "AM",
+            "AU",
+            "BH",
+            "BD",
+            "BT",
+            "BN",
+            "KH",
+            "CN",
+            "CY",
+            "GE",
+            "HK",
+            "IN",
+            "ID",
+            "IR",
+            "IQ",
+            "JP",
+            "JO",
+            "KZ",
+            "KW",
+            "LA",
+            "LB",
+            "MY",
+            "MV",
+            "MN",
+            "MM",
+            "NP",
+            "OM",
+            "PK",
+            "PH",
+            "QA",
+            "SA",
+            "SG",
+            "KR",
+            "LK",
+            "SY",
+            "TW",
+            "TH",
+            "TR",
+            "AE",
+            "VN",
+            "YE",
+            "AR",
+            "BO",
+            "BR",
+            "CL",
+            "CO",
+            "EC",
+            "GY",
+            "PY",
+            "PE",
+            "SR",
+            "UY",
+            "VE",
+        ]
+    ] = None
+
+    median: Optional[float] = None
+
+    metric_name: Optional[str] = FieldInfo(alias="metricName", default=None)
+
+    series: Optional[List[GetTopicsResponseItemMentionRatePreviousSery]] = None
+
+    to_date: Optional[datetime] = FieldInfo(alias="toDate", default=None)
+
+    value: Optional[float] = None
 
 
 class GetTopicsResponseItemMentionRate(BaseModel):
-    average: Optional[float] = None
+    current: Optional[GetTopicsResponseItemMentionRateCurrent] = None
 
-    data_format: Optional[Literal["NUMBER", "PERCENTAGE", "CURRENCY", "TEXT", "SCORE"]] = FieldInfo(
-        alias="dataFormat", default=None
-    )
-
-    dates: Optional[List[datetime]] = None
-
-    days_span: Optional[int] = FieldInfo(alias="daysSpan", default=None)
-
-    delta: Optional[float] = None
-
-    display_name: Optional[str] = FieldInfo(alias="displayName", default=None)
-
-    from_date: Optional[datetime] = FieldInfo(alias="fromDate", default=None)
-
-    language: Optional[
-        Literal[
-            "ENGLISH",
-            "SPANISH",
-            "PORTUGUESE",
-            "HEBREW",
-            "GERMAN",
-            "ITALIAN",
-            "FRENCH",
-            "MANDARIN",
-            "HINDI",
-            "ARABIC",
-            "JAPANESE",
-            "RUSSIAN",
-            "TURKISH",
-        ]
-    ] = None
-
-    locale: Optional[
-        Literal[
-            "GLOBAL",
-            "ISRAEL",
-            "EU",
-            "UK",
-            "US",
-            "IL",
-            "AL",
-            "AZ",
-            "KG",
-            "BA",
-            "UZ",
-            "BI",
-            "XK",
-            "SM",
-            "DE",
-            "AT",
-            "CH",
-            "IE",
-            "IM",
-            "FR",
-            "ES",
-            "NL",
-            "IT",
-            "PT",
-            "BE",
-            "AD",
-            "MT",
-            "MC",
-            "MA",
-            "LU",
-            "TN",
-            "DZ",
-            "GI",
-            "LI",
-            "SE",
-            "DK",
-            "FI",
-            "NO",
-            "AX",
-            "IS",
-            "GG",
-            "JE",
-            "GL",
-            "VA",
-            "FX",
-            "FO",
-            "AF",
-            "AM",
-            "AU",
-            "BH",
-            "BD",
-            "BT",
-            "BN",
-            "KH",
-            "CN",
-            "CY",
-            "GE",
-            "HK",
-            "IN",
-            "ID",
-            "IR",
-            "IQ",
-            "JP",
-            "JO",
-            "KZ",
-            "KW",
-            "LA",
-            "LB",
-            "MY",
-            "MV",
-            "MN",
-            "MM",
-            "NP",
-            "OM",
-            "PK",
-            "PH",
-            "QA",
-            "SA",
-            "SG",
-            "KR",
-            "LK",
-            "SY",
-            "TW",
-            "TH",
-            "TR",
-            "AE",
-            "VN",
-            "YE",
-            "AR",
-            "BO",
-            "BR",
-            "CL",
-            "CO",
-            "EC",
-            "GY",
-            "PY",
-            "PE",
-            "SR",
-            "UY",
-            "VE",
-        ]
-    ] = None
-
-    median: Optional[float] = None
-
-    metric_name: Optional[str] = FieldInfo(alias="metricName", default=None)
-
-    series: Optional[List[GetTopicsResponseItemMentionRateSery]] = None
-
-    to_date: Optional[datetime] = FieldInfo(alias="toDate", default=None)
-
-    value: Optional[float] = None
+    previous: Optional[GetTopicsResponseItemMentionRatePrevious] = None
 
 
-class GetTopicsResponseItemShareOfVoiceSery(BaseModel):
+class GetTopicsResponseItemShareOfVoiceCurrentSery(BaseModel):
     date: datetime
 
     value: float
 
 
-class GetTopicsResponseItemShareOfVoice(BaseModel):
+class GetTopicsResponseItemShareOfVoiceCurrent(BaseModel):
     average: Optional[float] = None
 
     data_format: Optional[Literal["NUMBER", "PERCENTAGE", "CURRENCY", "TEXT", "SCORE"]] = FieldInfo(
@@ -487,11 +822,174 @@ class GetTopicsResponseItemShareOfVoice(BaseModel):
 
     metric_name: Optional[str] = FieldInfo(alias="metricName", default=None)
 
-    series: Optional[List[GetTopicsResponseItemShareOfVoiceSery]] = None
+    series: Optional[List[GetTopicsResponseItemShareOfVoiceCurrentSery]] = None
 
     to_date: Optional[datetime] = FieldInfo(alias="toDate", default=None)
 
     value: Optional[float] = None
+
+
+class GetTopicsResponseItemShareOfVoicePreviousSery(BaseModel):
+    date: datetime
+
+    value: float
+
+
+class GetTopicsResponseItemShareOfVoicePrevious(BaseModel):
+    average: Optional[float] = None
+
+    data_format: Optional[Literal["NUMBER", "PERCENTAGE", "CURRENCY", "TEXT", "SCORE"]] = FieldInfo(
+        alias="dataFormat", default=None
+    )
+
+    dates: Optional[List[datetime]] = None
+
+    days_span: Optional[int] = FieldInfo(alias="daysSpan", default=None)
+
+    delta: Optional[float] = None
+
+    display_name: Optional[str] = FieldInfo(alias="displayName", default=None)
+
+    from_date: Optional[datetime] = FieldInfo(alias="fromDate", default=None)
+
+    language: Optional[
+        Literal[
+            "ENGLISH",
+            "SPANISH",
+            "PORTUGUESE",
+            "HEBREW",
+            "GERMAN",
+            "ITALIAN",
+            "FRENCH",
+            "MANDARIN",
+            "HINDI",
+            "ARABIC",
+            "JAPANESE",
+            "RUSSIAN",
+            "TURKISH",
+        ]
+    ] = None
+
+    locale: Optional[
+        Literal[
+            "GLOBAL",
+            "ISRAEL",
+            "EU",
+            "UK",
+            "US",
+            "IL",
+            "AL",
+            "AZ",
+            "KG",
+            "BA",
+            "UZ",
+            "BI",
+            "XK",
+            "SM",
+            "DE",
+            "AT",
+            "CH",
+            "IE",
+            "IM",
+            "FR",
+            "ES",
+            "NL",
+            "IT",
+            "PT",
+            "BE",
+            "AD",
+            "MT",
+            "MC",
+            "MA",
+            "LU",
+            "TN",
+            "DZ",
+            "GI",
+            "LI",
+            "SE",
+            "DK",
+            "FI",
+            "NO",
+            "AX",
+            "IS",
+            "GG",
+            "JE",
+            "GL",
+            "VA",
+            "FX",
+            "FO",
+            "AF",
+            "AM",
+            "AU",
+            "BH",
+            "BD",
+            "BT",
+            "BN",
+            "KH",
+            "CN",
+            "CY",
+            "GE",
+            "HK",
+            "IN",
+            "ID",
+            "IR",
+            "IQ",
+            "JP",
+            "JO",
+            "KZ",
+            "KW",
+            "LA",
+            "LB",
+            "MY",
+            "MV",
+            "MN",
+            "MM",
+            "NP",
+            "OM",
+            "PK",
+            "PH",
+            "QA",
+            "SA",
+            "SG",
+            "KR",
+            "LK",
+            "SY",
+            "TW",
+            "TH",
+            "TR",
+            "AE",
+            "VN",
+            "YE",
+            "AR",
+            "BO",
+            "BR",
+            "CL",
+            "CO",
+            "EC",
+            "GY",
+            "PY",
+            "PE",
+            "SR",
+            "UY",
+            "VE",
+        ]
+    ] = None
+
+    median: Optional[float] = None
+
+    metric_name: Optional[str] = FieldInfo(alias="metricName", default=None)
+
+    series: Optional[List[GetTopicsResponseItemShareOfVoicePreviousSery]] = None
+
+    to_date: Optional[datetime] = FieldInfo(alias="toDate", default=None)
+
+    value: Optional[float] = None
+
+
+class GetTopicsResponseItemShareOfVoice(BaseModel):
+    current: Optional[GetTopicsResponseItemShareOfVoiceCurrent] = None
+
+    previous: Optional[GetTopicsResponseItemShareOfVoicePrevious] = None
 
 
 class GetTopicsResponseItemTopicPrompt(BaseModel):

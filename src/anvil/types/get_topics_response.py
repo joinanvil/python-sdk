@@ -13,26 +13,26 @@ __all__ = [
     "GetTopicsResponseItem",
     "GetTopicsResponseItemAverageRanking",
     "GetTopicsResponseItemAverageRankingCurrent",
-    "GetTopicsResponseItemAverageRankingCurrentSery",
+    "GetTopicsResponseItemAverageRankingCurrentSeries",
     "GetTopicsResponseItemAverageRankingPrevious",
-    "GetTopicsResponseItemAverageRankingPreviousSery",
+    "GetTopicsResponseItemAverageRankingPreviousSeries",
     "GetTopicsResponseItemMentionRate",
     "GetTopicsResponseItemMentionRateCurrent",
-    "GetTopicsResponseItemMentionRateCurrentSery",
+    "GetTopicsResponseItemMentionRateCurrentSeries",
     "GetTopicsResponseItemMentionRatePrevious",
-    "GetTopicsResponseItemMentionRatePreviousSery",
+    "GetTopicsResponseItemMentionRatePreviousSeries",
     "GetTopicsResponseItemShareOfVoice",
     "GetTopicsResponseItemShareOfVoiceCurrent",
-    "GetTopicsResponseItemShareOfVoiceCurrentSery",
+    "GetTopicsResponseItemShareOfVoiceCurrentSeries",
     "GetTopicsResponseItemShareOfVoicePrevious",
-    "GetTopicsResponseItemShareOfVoicePreviousSery",
+    "GetTopicsResponseItemShareOfVoicePreviousSeries",
     "GetTopicsResponseItemTopic",
     "GetTopicsResponseItemTopicPrompt",
     "GetTopicsResponseItemTopicTag",
 ]
 
 
-class GetTopicsResponseItemAverageRankingCurrentSery(BaseModel):
+class GetTopicsResponseItemAverageRankingCurrentSeries(BaseModel):
     date: datetime
 
     value: float
@@ -182,14 +182,14 @@ class GetTopicsResponseItemAverageRankingCurrent(BaseModel):
 
     metric_name: Optional[str] = FieldInfo(alias="metricName", default=None)
 
-    series: Optional[List[GetTopicsResponseItemAverageRankingCurrentSery]] = None
+    series: Optional[List[GetTopicsResponseItemAverageRankingCurrentSeries]] = None
 
     to_date: Optional[datetime] = FieldInfo(alias="toDate", default=None)
 
     value: Optional[float] = None
 
 
-class GetTopicsResponseItemAverageRankingPreviousSery(BaseModel):
+class GetTopicsResponseItemAverageRankingPreviousSeries(BaseModel):
     date: datetime
 
     value: float
@@ -339,7 +339,7 @@ class GetTopicsResponseItemAverageRankingPrevious(BaseModel):
 
     metric_name: Optional[str] = FieldInfo(alias="metricName", default=None)
 
-    series: Optional[List[GetTopicsResponseItemAverageRankingPreviousSery]] = None
+    series: Optional[List[GetTopicsResponseItemAverageRankingPreviousSeries]] = None
 
     to_date: Optional[datetime] = FieldInfo(alias="toDate", default=None)
 
@@ -352,7 +352,7 @@ class GetTopicsResponseItemAverageRanking(BaseModel):
     previous: Optional[GetTopicsResponseItemAverageRankingPrevious] = None
 
 
-class GetTopicsResponseItemMentionRateCurrentSery(BaseModel):
+class GetTopicsResponseItemMentionRateCurrentSeries(BaseModel):
     date: datetime
 
     value: float
@@ -502,14 +502,14 @@ class GetTopicsResponseItemMentionRateCurrent(BaseModel):
 
     metric_name: Optional[str] = FieldInfo(alias="metricName", default=None)
 
-    series: Optional[List[GetTopicsResponseItemMentionRateCurrentSery]] = None
+    series: Optional[List[GetTopicsResponseItemMentionRateCurrentSeries]] = None
 
     to_date: Optional[datetime] = FieldInfo(alias="toDate", default=None)
 
     value: Optional[float] = None
 
 
-class GetTopicsResponseItemMentionRatePreviousSery(BaseModel):
+class GetTopicsResponseItemMentionRatePreviousSeries(BaseModel):
     date: datetime
 
     value: float
@@ -659,7 +659,7 @@ class GetTopicsResponseItemMentionRatePrevious(BaseModel):
 
     metric_name: Optional[str] = FieldInfo(alias="metricName", default=None)
 
-    series: Optional[List[GetTopicsResponseItemMentionRatePreviousSery]] = None
+    series: Optional[List[GetTopicsResponseItemMentionRatePreviousSeries]] = None
 
     to_date: Optional[datetime] = FieldInfo(alias="toDate", default=None)
 
@@ -672,7 +672,7 @@ class GetTopicsResponseItemMentionRate(BaseModel):
     previous: Optional[GetTopicsResponseItemMentionRatePrevious] = None
 
 
-class GetTopicsResponseItemShareOfVoiceCurrentSery(BaseModel):
+class GetTopicsResponseItemShareOfVoiceCurrentSeries(BaseModel):
     date: datetime
 
     value: float
@@ -822,14 +822,14 @@ class GetTopicsResponseItemShareOfVoiceCurrent(BaseModel):
 
     metric_name: Optional[str] = FieldInfo(alias="metricName", default=None)
 
-    series: Optional[List[GetTopicsResponseItemShareOfVoiceCurrentSery]] = None
+    series: Optional[List[GetTopicsResponseItemShareOfVoiceCurrentSeries]] = None
 
     to_date: Optional[datetime] = FieldInfo(alias="toDate", default=None)
 
     value: Optional[float] = None
 
 
-class GetTopicsResponseItemShareOfVoicePreviousSery(BaseModel):
+class GetTopicsResponseItemShareOfVoicePreviousSeries(BaseModel):
     date: datetime
 
     value: float
@@ -979,7 +979,7 @@ class GetTopicsResponseItemShareOfVoicePrevious(BaseModel):
 
     metric_name: Optional[str] = FieldInfo(alias="metricName", default=None)
 
-    series: Optional[List[GetTopicsResponseItemShareOfVoicePreviousSery]] = None
+    series: Optional[List[GetTopicsResponseItemShareOfVoicePreviousSeries]] = None
 
     to_date: Optional[datetime] = FieldInfo(alias="toDate", default=None)
 

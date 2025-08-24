@@ -13,14 +13,14 @@ __all__ = [
     "GetAggregatedPromptsResponseItem",
     "GetAggregatedPromptsResponseItemMentionFrequency",
     "GetAggregatedPromptsResponseItemMentionFrequencyCurrent",
-    "GetAggregatedPromptsResponseItemMentionFrequencyCurrentSery",
+    "GetAggregatedPromptsResponseItemMentionFrequencyCurrentSeries",
     "GetAggregatedPromptsResponseItemMentionFrequencyPrevious",
-    "GetAggregatedPromptsResponseItemMentionFrequencyPreviousSery",
+    "GetAggregatedPromptsResponseItemMentionFrequencyPreviousSeries",
     "GetAggregatedPromptsResponseItemSeoMetrics",
 ]
 
 
-class GetAggregatedPromptsResponseItemMentionFrequencyCurrentSery(BaseModel):
+class GetAggregatedPromptsResponseItemMentionFrequencyCurrentSeries(BaseModel):
     date: datetime
 
     value: float
@@ -170,14 +170,14 @@ class GetAggregatedPromptsResponseItemMentionFrequencyCurrent(BaseModel):
 
     metric_name: Optional[str] = FieldInfo(alias="metricName", default=None)
 
-    series: Optional[List[GetAggregatedPromptsResponseItemMentionFrequencyCurrentSery]] = None
+    series: Optional[List[GetAggregatedPromptsResponseItemMentionFrequencyCurrentSeries]] = None
 
     to_date: Optional[datetime] = FieldInfo(alias="toDate", default=None)
 
     value: Optional[float] = None
 
 
-class GetAggregatedPromptsResponseItemMentionFrequencyPreviousSery(BaseModel):
+class GetAggregatedPromptsResponseItemMentionFrequencyPreviousSeries(BaseModel):
     date: datetime
 
     value: float
@@ -327,7 +327,7 @@ class GetAggregatedPromptsResponseItemMentionFrequencyPrevious(BaseModel):
 
     metric_name: Optional[str] = FieldInfo(alias="metricName", default=None)
 
-    series: Optional[List[GetAggregatedPromptsResponseItemMentionFrequencyPreviousSery]] = None
+    series: Optional[List[GetAggregatedPromptsResponseItemMentionFrequencyPreviousSeries]] = None
 
     to_date: Optional[datetime] = FieldInfo(alias="toDate", default=None)
 

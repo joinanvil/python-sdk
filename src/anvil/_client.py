@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 import os
-from typing import Any, List, Union, Mapping
+from typing import Any, Union, Mapping
 from typing_extensions import Self, override
 
 import httpx
@@ -22,6 +22,7 @@ from ._types import (
     Transport,
     ProxiesTypes,
     RequestOptions,
+    SequenceNotStr,
 )
 from ._utils import (
     is_given,
@@ -190,7 +191,7 @@ class Anvil(SyncAPIClient):
         website_topic_id: str,
         from_date: int,
         llm_provider: str,
-        tag_ids: List[str],
+        tag_ids: SequenceNotStr[str],
         to_date: int,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -294,7 +295,7 @@ class Anvil(SyncAPIClient):
         *,
         from_date: int,
         llm_provider: str,
-        tag_ids: List[str],
+        tag_ids: SequenceNotStr[str],
         to_date: int,
         archive: bool | NotGiven = NOT_GIVEN,
         competitor_url: str | NotGiven = NOT_GIVEN,
@@ -508,7 +509,7 @@ class AsyncAnvil(AsyncAPIClient):
         website_topic_id: str,
         from_date: int,
         llm_provider: str,
-        tag_ids: List[str],
+        tag_ids: SequenceNotStr[str],
         to_date: int,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -614,7 +615,7 @@ class AsyncAnvil(AsyncAPIClient):
         *,
         from_date: int,
         llm_provider: str,
-        tag_ids: List[str],
+        tag_ids: SequenceNotStr[str],
         to_date: int,
         archive: bool | NotGiven = NOT_GIVEN,
         competitor_url: str | NotGiven = NOT_GIVEN,

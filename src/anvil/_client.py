@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 import os
-from typing import Any, Union, Mapping
+from typing import Any, Mapping
 from typing_extensions import Self, override
 
 import httpx
@@ -12,7 +12,6 @@ from . import _exceptions
 from ._qs import Querystring
 from .types import client_get_prompt_params, client_get_topics_params, client_get_aggregated_prompts_params
 from ._types import (
-    NOT_GIVEN,
     Body,
     Omit,
     Query,
@@ -23,6 +22,8 @@ from ._types import (
     ProxiesTypes,
     RequestOptions,
     SequenceNotStr,
+    omit,
+    not_given,
 )
 from ._utils import (
     is_given,
@@ -65,7 +66,7 @@ class Anvil(SyncAPIClient):
         *,
         api_key: str | None = None,
         base_url: str | httpx.URL | None = None,
-        timeout: Union[float, Timeout, None, NotGiven] = NOT_GIVEN,
+        timeout: float | Timeout | None | NotGiven = not_given,
         max_retries: int = DEFAULT_MAX_RETRIES,
         default_headers: Mapping[str, str] | None = None,
         default_query: Mapping[str, object] | None = None,
@@ -139,9 +140,9 @@ class Anvil(SyncAPIClient):
         *,
         api_key: str | None = None,
         base_url: str | httpx.URL | None = None,
-        timeout: float | Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | Timeout | None | NotGiven = not_given,
         http_client: httpx.Client | None = None,
-        max_retries: int | NotGiven = NOT_GIVEN,
+        max_retries: int | NotGiven = not_given,
         default_headers: Mapping[str, str] | None = None,
         set_default_headers: Mapping[str, str] | None = None,
         default_query: Mapping[str, object] | None = None,
@@ -198,7 +199,7 @@ class Anvil(SyncAPIClient):
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> GetAggregatedPromptsResponse:
         """
         Returns metrics for all prompts with frequency over time topic ID
@@ -244,7 +245,7 @@ class Anvil(SyncAPIClient):
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> GetMetadataResponse:
         """Returns all metadata by website ID"""
         return self.get(
@@ -264,7 +265,7 @@ class Anvil(SyncAPIClient):
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> GetPromptResponse:
         """
         Returns all related metrics data by prompt ID
@@ -297,14 +298,14 @@ class Anvil(SyncAPIClient):
         llm_provider: str,
         tag_ids: SequenceNotStr[str],
         to_date: int,
-        archive: bool | NotGiven = NOT_GIVEN,
-        competitor_url: str | NotGiven = NOT_GIVEN,
+        archive: bool | Omit = omit,
+        competitor_url: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> GetTopicsResponse:
         """
         Returns metrics for all the topics by website ID
@@ -383,7 +384,7 @@ class AsyncAnvil(AsyncAPIClient):
         *,
         api_key: str | None = None,
         base_url: str | httpx.URL | None = None,
-        timeout: Union[float, Timeout, None, NotGiven] = NOT_GIVEN,
+        timeout: float | Timeout | None | NotGiven = not_given,
         max_retries: int = DEFAULT_MAX_RETRIES,
         default_headers: Mapping[str, str] | None = None,
         default_query: Mapping[str, object] | None = None,
@@ -457,9 +458,9 @@ class AsyncAnvil(AsyncAPIClient):
         *,
         api_key: str | None = None,
         base_url: str | httpx.URL | None = None,
-        timeout: float | Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | Timeout | None | NotGiven = not_given,
         http_client: httpx.AsyncClient | None = None,
-        max_retries: int | NotGiven = NOT_GIVEN,
+        max_retries: int | NotGiven = not_given,
         default_headers: Mapping[str, str] | None = None,
         set_default_headers: Mapping[str, str] | None = None,
         default_query: Mapping[str, object] | None = None,
@@ -516,7 +517,7 @@ class AsyncAnvil(AsyncAPIClient):
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> GetAggregatedPromptsResponse:
         """
         Returns metrics for all prompts with frequency over time topic ID
@@ -562,7 +563,7 @@ class AsyncAnvil(AsyncAPIClient):
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> GetMetadataResponse:
         """Returns all metadata by website ID"""
         return await self.get(
@@ -582,7 +583,7 @@ class AsyncAnvil(AsyncAPIClient):
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> GetPromptResponse:
         """
         Returns all related metrics data by prompt ID
@@ -617,14 +618,14 @@ class AsyncAnvil(AsyncAPIClient):
         llm_provider: str,
         tag_ids: SequenceNotStr[str],
         to_date: int,
-        archive: bool | NotGiven = NOT_GIVEN,
-        competitor_url: str | NotGiven = NOT_GIVEN,
+        archive: bool | Omit = omit,
+        competitor_url: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> GetTopicsResponse:
         """
         Returns metrics for all the topics by website ID

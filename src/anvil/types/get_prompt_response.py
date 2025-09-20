@@ -8,10 +8,10 @@ from pydantic import Field as FieldInfo
 
 from .._models import BaseModel
 
-__all__ = ["BetaRetrievePromptResponse", "BetaRetrievePromptResponseItem", "BetaRetrievePromptResponseItemData"]
+__all__ = ["GetPromptResponse", "GetPromptResponseItem", "GetPromptResponseItemData"]
 
 
-class BetaRetrievePromptResponseItemData(BaseModel):
+class GetPromptResponseItemData(BaseModel):
     important_terms: Optional[List[str]] = FieldInfo(alias="importantTerms", default=None)
 
     mentions: Optional[Dict[str, int]] = None
@@ -27,8 +27,10 @@ class BetaRetrievePromptResponseItemData(BaseModel):
     sources: Optional[List[str]] = None
 
 
-class BetaRetrievePromptResponseItem(BaseModel):
+class GetPromptResponseItem(BaseModel):
     id: Optional[str] = None
+
+    answer_process_model: Optional[str] = FieldInfo(alias="answerProcessModel", default=None)
 
     answer_text: Optional[str] = FieldInfo(alias="answerText", default=None)
 
@@ -38,7 +40,7 @@ class BetaRetrievePromptResponseItem(BaseModel):
 
     created: Optional[datetime] = None
 
-    data: Optional[BetaRetrievePromptResponseItemData] = None
+    data: Optional[GetPromptResponseItemData] = None
 
     language: Optional[
         Literal[
@@ -54,6 +56,7 @@ class BetaRetrievePromptResponseItem(BaseModel):
             "ARABIC",
             "JAPANESE",
             "RUSSIAN",
+            "TURKISH",
         ]
     ] = None
 
@@ -194,4 +197,4 @@ class BetaRetrievePromptResponseItem(BaseModel):
     website_topic_id: Optional[str] = FieldInfo(alias="websiteTopicId", default=None)
 
 
-BetaRetrievePromptResponse: TypeAlias = List[BetaRetrievePromptResponseItem]
+GetPromptResponse: TypeAlias = List[GetPromptResponseItem]

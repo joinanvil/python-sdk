@@ -2,8 +2,10 @@
 
 from __future__ import annotations
 
-from .beta_create_topic_params import BetaCreateTopicParams as BetaCreateTopicParams
-from .beta_create_topic_response import BetaCreateTopicResponse as BetaCreateTopicResponse
-from .beta_retrieve_prompt_params import BetaRetrievePromptParams as BetaRetrievePromptParams
-from .beta_retrieve_prompt_response import BetaRetrievePromptResponse as BetaRetrievePromptResponse
-from .beta_retrieve_metadata_response import BetaRetrieveMetadataResponse as BetaRetrieveMetadataResponse
+from .get_prompt_response import GetPromptResponse as GetPromptResponse
+from .get_topics_response import GetTopicsResponse as GetTopicsResponse
+from .get_metadata_response import GetMetadataResponse as GetMetadataResponse
+from .client_get_prompt_params import ClientGetPromptParams as ClientGetPromptParams
+from .client_get_topics_params import ClientGetTopicsParams as ClientGetTopicsParams
+from .get_aggregated_prompts_response import GetAggregatedPromptsResponse as GetAggregatedPromptsResponse
+from .client_get_aggregated_prompts_params import ClientGetAggregatedPromptsParams as ClientGetAggregatedPromptsParams

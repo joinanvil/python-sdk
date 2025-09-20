@@ -6,13 +6,10 @@ import gc
 import os
 import sys
 import json
-import time
 import asyncio
 import inspect
-import subprocess
 import tracemalloc
 from typing import Any, Union, cast
-from textwrap import dedent
 from unittest import mock
 from typing_extensions import Literal
 
@@ -23,14 +20,17 @@ from pydantic import ValidationError
 
 from anvil import Anvil, AsyncAnvil, APIResponseValidationError
 from anvil._types import Omit
+from anvil._utils import asyncify
 from anvil._models import BaseModel, FinalRequestOptions
 from anvil._exceptions import AnvilError, APIStatusError, APITimeoutError, APIResponseValidationError
 from anvil._base_client import (
     DEFAULT_TIMEOUT,
     HTTPX_DEFAULT_TIMEOUT,
     BaseClient,
+    OtherPlatform,
     DefaultHttpxClient,
     DefaultAsyncHttpxClient,
+    get_platform,
     make_request_options,
 )
 
@@ -715,7 +715,7 @@ class TestAnvil:
         respx_mock.post("/api/beta/topics").mock(side_effect=httpx.TimeoutException("Test timeout error"))
 
         with pytest.raises(APITimeoutError):
-            client.beta.with_streaming_response.create_topic(
+            client.with_streaming_response.get_topics(
                 from_date=0, llm_provider="llmProvider", tag_ids=["string"], to_date=0
             ).__enter__()
 
@@ -727,7 +727,7 @@ class TestAnvil:
         respx_mock.post("/api/beta/topics").mock(return_value=httpx.Response(500))
 
         with pytest.raises(APIStatusError):
-            client.beta.with_streaming_response.create_topic(
+            client.with_streaming_response.get_topics(
                 from_date=0, llm_provider="llmProvider", tag_ids=["string"], to_date=0
             ).__enter__()
         assert _get_open_connections(self.client) == 0
@@ -758,7 +758,7 @@ class TestAnvil:
 
         respx_mock.post("/api/beta/topics").mock(side_effect=retry_handler)
 
-        response = client.beta.with_raw_response.create_topic(
+        response = client.with_raw_response.get_topics(
             from_date=0, llm_provider="llmProvider", tag_ids=["string"], to_date=0
         )
 
@@ -782,7 +782,7 @@ class TestAnvil:
 
         respx_mock.post("/api/beta/topics").mock(side_effect=retry_handler)
 
-        response = client.beta.with_raw_response.create_topic(
+        response = client.with_raw_response.get_topics(
             from_date=0,
             llm_provider="llmProvider",
             tag_ids=["string"],
@@ -811,7 +811,7 @@ class TestAnvil:
 
         respx_mock.post("/api/beta/topics").mock(side_effect=retry_handler)
 
-        response = client.beta.with_raw_response.create_topic(
+        response = client.with_raw_response.get_topics(
             from_date=0,
             llm_provider="llmProvider",
             tag_ids=["string"],
@@ -1544,7 +1544,7 @@ class TestAsyncAnvil:
         respx_mock.post("/api/beta/topics").mock(side_effect=httpx.TimeoutException("Test timeout error"))
 
         with pytest.raises(APITimeoutError):
-            await async_client.beta.with_streaming_response.create_topic(
+            await async_client.with_streaming_response.get_topics(
                 from_date=0, llm_provider="llmProvider", tag_ids=["string"], to_date=0
             ).__aenter__()
 
@@ -1556,7 +1556,7 @@ class TestAsyncAnvil:
         respx_mock.post("/api/beta/topics").mock(return_value=httpx.Response(500))
 
         with pytest.raises(APIStatusError):
-            await async_client.beta.with_streaming_response.create_topic(
+            await async_client.with_streaming_response.get_topics(
                 from_date=0, llm_provider="llmProvider", tag_ids=["string"], to_date=0
             ).__aenter__()
         assert _get_open_connections(self.client) == 0
@@ -1588,7 +1588,7 @@ class TestAsyncAnvil:
 
         respx_mock.post("/api/beta/topics").mock(side_effect=retry_handler)
 
-        response = await client.beta.with_raw_response.create_topic(
+        response = await client.with_raw_response.get_topics(
             from_date=0, llm_provider="llmProvider", tag_ids=["string"], to_date=0
         )
 
@@ -1615,7 +1615,7 @@ class TestAsyncAnvil:
 
         respx_mock.post("/api/beta/topics").mock(side_effect=retry_handler)
 
-        response = await client.beta.with_raw_response.create_topic(
+        response = await client.with_raw_response.get_topics(
             from_date=0,
             llm_provider="llmProvider",
             tag_ids=["string"],
@@ -1645,7 +1645,7 @@ class TestAsyncAnvil:
 
         respx_mock.post("/api/beta/topics").mock(side_effect=retry_handler)
 
-        response = await client.beta.with_raw_response.create_topic(
+        response = await client.with_raw_response.get_topics(
             from_date=0,
             llm_provider="llmProvider",
             tag_ids=["string"],
@@ -1655,50 +1655,9 @@ class TestAsyncAnvil:
 
         assert response.http_request.headers.get("x-stainless-retry-count") == "42"
 
-    def test_get_platform(self) -> None:
-        # A previous implementation of asyncify could leave threads unterminated when
-        # used with nest_asyncio.
-        #
-        # Since nest_asyncio.apply() is global and cannot be un-applied, this
-        # test is run in a separate process to avoid affecting other tests.
-        test_code = dedent("""
-        import asyncio
-        import nest_asyncio
-        import threading
-
-        from anvil._utils import asyncify
-        from anvil._base_client import get_platform
-
-        async def test_main() -> None:
-            result = await asyncify(get_platform)()
-            print(result)
-            for thread in threading.enumerate():
-                print(thread.name)
-
-        nest_asyncio.apply()
-        asyncio.run(test_main())
-        """)
-        with subprocess.Popen(
-            [sys.executable, "-c", test_code],
-            text=True,
-        ) as process:
-            timeout = 10  # seconds
-
-            start_time = time.monotonic()
-            while True:
-                return_code = process.poll()
-                if return_code is not None:
-                    if return_code != 0:
-                        raise AssertionError("calling get_platform using asyncify resulted in a non-zero exit code")
-
-                    # success
-                    break
-
-                if time.monotonic() - start_time > timeout:
-                    process.kill()
-                    raise AssertionError("calling get_platform using asyncify resulted in a hung process")
-
-                time.sleep(0.1)
+    async def test_get_platform(self) -> None:
+        platform = await asyncify(get_platform)()
+        assert isinstance(platform, (str, OtherPlatform))
 
     async def test_proxy_environment_variables(self, monkeypatch: pytest.MonkeyPatch) -> None:
         # Test that the proxy environment variables are set correctly
